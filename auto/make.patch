@@ -1,0 +1,42 @@
+--- make.origin	2015-07-17 09:32:31.051591385 +0800
++++ make	2015-07-17 09:32:39.707446859 +0800
+@@ -22,7 +22,12 @@
+ CC =	$CC
+ CFLAGS = $CFLAGS
+ CPP =	$CPP
+-LINK =	$LINK
++#LINK =	$LINK
++
++CXX = g++
++CXXFLAGS = -g -O0 -std=c++0x -Wall
++LINK = g++
++
+ 
+ END
+ 
+@@ -337,6 +342,7 @@
+ if test -n "$NGX_ADDON_SRCS"; then
+ 
+     ngx_cc="\$(CC) $ngx_compile_opt \$(CFLAGS) $ngx_use_pch \$(ALL_INCS)"
++    ngx_cxx="\$(CXX) $ngx_compile_opt \$(CXXFLAGS) $ngx_use_pch \$(ALL_INCS)"
+ 
+     for ngx_src in $NGX_ADDON_SRCS
+     do
+@@ -353,10 +359,16 @@
+ 
+         ngx_src=`echo $ngx_src | sed -e "s/\//$ngx_regex_dirsep/g"`
+ 
++        ext=`echo ${ngx_src}|cut -d . -f 2`
++        ngx_gcc=$ngx_cc
++        if [ $ext = "cpp" ]; then
++                   ngx_gcc=$ngx_cxx
++        fi
++
+         cat << END                                            >> $NGX_MAKEFILE
+ 
+ $ngx_obj:	\$(ADDON_DEPS)$ngx_cont$ngx_src
+-	$ngx_cc$ngx_tab$ngx_objout$ngx_obj$ngx_tab$ngx_src$NGX_AUX
++	$ngx_gcc$ngx_tab$ngx_objout$ngx_obj$ngx_tab$ngx_src$NGX_AUX
+ 
+ END
+      done
