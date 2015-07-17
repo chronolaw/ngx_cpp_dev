@@ -66,7 +66,7 @@ public:
     ~NgxSubRequest() = default;
 public:
     ngx_http_request_t* create(ngx_str_t& uri,
-                               ngx_str_t& args = nullptr,
+                               ngx_str_t& args = nullargs(),
                                void* psr_data = nullptr,
                                ngx_uint_t flags = 0) const
     {
@@ -82,6 +82,12 @@ public:
         NgxException::require(rc);      // create failed throw exception
 
         return sr;
+    }
+private:
+    static ngx_str_t& nullargs()
+    {
+        static ngx_str_t s = ngx_null_string;
+        return s;
     }
 };
 
