@@ -1,0 +1,6 @@
+#./configure --add-module=$HOME/ngx_cpp_dev/modules/footer
+
+ngx_addon_name=ndg_footer_module
+
+HTTP_FILTER_MODULES="$HTTP_FILTER_MODULES ndg_footer_module"
+NGX_ADDON_SRCS="$NGX_ADDON_SRCS $ngx_addon_dir/ModNdgFooter.cpp"
