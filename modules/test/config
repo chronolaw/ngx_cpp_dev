@@ -1,0 +1,23 @@
+#./configure --add-module=$HOME/ngx_cpp_dev/modules/test
+
+ngx_addon_name=ndg_test_module
+
+HTTP_MODULES="$HTTP_MODULES ndg_test_module"
+NGX_ADDON_SRCS="$NGX_ADDON_SRCS $ngx_addon_dir/ModNdgTest.cpp"
+#HTTP_INCS="$HTTP_INCS $ngx_addon_dir/../../ngxpp"
+
+#CORE_LIBS="$CORE_LIBS -lboost_date_time"
+
+#############
+
+ndg_addon_mod=ndg_test_module
+ndg_addon_src=ModNdgTest.cpp
+ndg_addon_incs="$ngx_addon_dir/../../ngxpp"
+
+#HTTP_MODULES="$HTTP_MODULES $ndg_addon_mod"
+#HTTP_AUX_FILTER_MODULES="$HTTP_AUX_FILTER_MODULES $ndg_addon_name"
+
+#NGX_ADDON_SRCS="$NGX_ADDON_SRCS $ngx_addon_dir/$ndg_addon_src"
+
+#HTTP_INCS="$HTTP_INCS $ndg_addon_incs"
+#CORE_LIBS="$CORE_LIBS $ndg_addon_libs"
