@@ -21,3 +21,7 @@ Then configure nginx with:
 make
 ~~~~
 
+You should use ngx_cpp_module like this:
+~~~
+#include "NgxAll.hpp"	// include all c++ tools 
+~~~
