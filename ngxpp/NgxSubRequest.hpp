@@ -66,7 +66,7 @@ public:
     ~NgxSubRequest() = default;
 public:
     ngx_http_request_t* create(ngx_str_t& uri,
-                               ngx_str_t& args = nullargs(),
+                               ngx_str_t& args,
                                void* psr_data = nullptr,
                                ngx_uint_t flags = 0) const
     {
@@ -83,11 +83,23 @@ public:
 
         return sr;
     }
-private:
-    static ngx_str_t& nullargs()
+
+    ngx_http_request_t* create(ngx_str_t& uri,
+                               void* psr_data = nullptr,
+                               ngx_uint_t flags = 0) const
     {
-        static ngx_str_t s = ngx_null_string;
-        return s;
+        auto psr = NgxPool(get()).alloc<ngx_http_post_subrequest_t>();
+
+        psr->handler = &this_handler::sub_post;
+        psr->data = psr_data;
+
+        ngx_http_request_t* sr;
+
+        auto rc = ngx_http_subrequest(
+                get(), &uri, nullptr, &sr, psr, flags);
+        NgxException::require(rc);      // create failed throw exception
+
+        return sr;
     }
 };
 
