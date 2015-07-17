@@ -1,0 +1,6 @@
+#./configure --add-module=$HOME/ngx_cpp_dev/modules/echo
+
+ngx_addon_name=ndg_echo_module
+
+HTTP_MODULES="$HTTP_MODULES ndg_echo_module"
+NGX_ADDON_SRCS="$NGX_ADDON_SRCS $ngx_addon_dir/ModNdgEcho.cpp"
