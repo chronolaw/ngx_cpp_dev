@@ -1,0 +1,6 @@
+#./configure --add-module=$HOME/ngx_cpp_dev/ngxpp
+
+ngx_addon_name=ngx_cpp_module
+
+HTTP_INCS="$HTTP_INCS $ngx_addon_dir"
+
