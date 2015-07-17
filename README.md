@@ -2,7 +2,7 @@ Name
 ====
 ngx_cpp_dev
 
-Nginx cpp development kit, with C++11 and Boost Library.
+Nginx cpp development kit, with the power of C++11 and Boost Library.
 
 Requirements
 ============
