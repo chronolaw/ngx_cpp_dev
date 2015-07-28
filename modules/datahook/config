@@ -1,0 +1,6 @@
+#./configure --add-module=$HOME/ngx_cpp_dev/modules/data_hook
+
+ngx_addon_name=ndg_data_hook_module
+
+HTTP_FILTER_MODULES="$HTTP_FILTER_MODULES ndg_data_hook_module"
+NGX_ADDON_SRCS="$NGX_ADDON_SRCS $ngx_addon_dir/ModNdgDataHook.cpp"
