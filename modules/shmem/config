@@ -1,0 +1,7 @@
+#./configure --add-module=$HOME/ngx_cpp_dev/modules/shmem
+
+ngx_addon_name=ndg_shmem_module
+
+HTTP_MODULES="$HTTP_MODULES ndg_shmem_module"
+NGX_ADDON_SRCS="$NGX_ADDON_SRCS $ngx_addon_dir/ModNdgShmem.cpp"
+CORE_LIBS="$CORE_LIBS -lrt"
