@@ -35,7 +35,7 @@ public:
         }
 
         NgxHeadersOut h(ctx_data.headers);
-        NgxHeadersChecker()(h);
+        //NgxHeadersChecker()(h);
 
         ngx_str_t msg = ngx_string("subrequest");
 
