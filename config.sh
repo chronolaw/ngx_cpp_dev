@@ -10,14 +10,14 @@ cd $ngx_path
     --add-module=$src_path/ngxpp            \
     --add-module=$src_path/modules/test     \
     --add-module=$src_path/modules/echo     \
+    --add-module=$src_path/modules/datahook \
     --add-module=$src_path/modules/filter   \
     --add-module=$src_path/modules/upstream \
     --add-module=$src_path/modules/loadbalance \
+    --add-module=$src_path/modules/subrequest \
+    --add-module=$src_path/modules/shmem    \
+    --add-module=$src_path/modules/variables
 
 #    --with-ld-opt="-lrt"
-#    --add-module=$src_path/modules/datahook 
-#    --add-module=$src_path/modules/subrequest 
-#    --add-module=$src_path/modules/shmem    
-#    --add-module=$src_path/modules/variables
 
 cd -
