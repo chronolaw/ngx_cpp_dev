@@ -1,4 +1,4 @@
-// Copyright (c) chinacache 2015
+// Copyright (c) 2015
 // Author: Chrono Law
 #ifndef _NGX_COMPLEX_VALUE_HPP
 #define _NGX_COMPLEX_VALUE_HPP
