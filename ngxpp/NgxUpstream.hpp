@@ -46,9 +46,9 @@ public:
         ch.append(bufs);
     }
 
-    ngx_buf_t& buffer() const
+    ngx_buf_t* buffer() const
     {
-        return get()->buffer;
+        return &get()->buffer;
     }
 public:
     ngx_http_upstream_headers_in_t& headers() const
