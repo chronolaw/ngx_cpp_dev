@@ -92,11 +92,23 @@ public:
         {
             upstream()->create_request = create_request;
             upstream()->process_header = process_header;
-            upstream()->finalize_request = finalize_request?
-                                      finalize_request:
-                                      &this_type::default_finalize_request;
+            upstream()->finalize_request = finalize_request;
         }
 
+        // check callback function
+        assert(upstream()->create_request);
+
+        if(!upstream()->reinit_request)
+        {
+            upstream()->reinit_request = &this_type::default_reinit_request;
+        }
+
+        if(!upstream()->finalize_request)
+        {
+            upstream()->finalize_request = &this_type::default_finalize_request;
+        }
+
+        // init upstream
         if(read_body)
         {
             auto rc =
@@ -140,6 +152,11 @@ private:
     static void default_finalize_request(ngx_http_request_t* r,ngx_int_t rc)
     {
         NgxLogDebug(r).print("default_finalize_request");
+    }
+    static ngx_int_t default_reinit_request(ngx_http_request_t* r)
+    {
+        NgxLogDebug(r).print("default_reinit_request");
+        return NGX_OK;
     }
 };
 
