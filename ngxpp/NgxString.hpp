@@ -23,10 +23,13 @@ public:
         super_type(str)
     {}
 
-    // enable convert tmp object
+    // enable convert const object
     NgxString(const ngx_str_t& str):
         super_type(const_cast<ngx_str_t&>(str))
     {}
+
+    // disable temporary object
+    NgxString(ngx_str_t&& str) = delete;
 
     ~NgxString() = default;
 public:
@@ -93,6 +96,13 @@ public:
     friend T& operator<<(T& o, const this_type& s)
     {
         o.write(s.data(), s.size());
+        return o;
+    }
+
+    template<typename T>
+    friend T& operator<<(T& o, const ngx_str_t& s)
+    {
+        o.write(reinterpret_cast<const char*>(s.data), s.len);
         return o;
     }
 
