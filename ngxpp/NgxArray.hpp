@@ -39,6 +39,31 @@ public:
     }
 
 public:
+    bool empty() const
+    {
+        return get()->nelts == 0;
+    }
+
+    void clear() const
+    {
+        get()->nelts = 0;
+    }
+
+public:
+    template<typename U>
+    NgxArray<U> reshape(ngx_uint_t n = 0, ngx_pool_t* pool = nullptr) const
+    {
+        auto rc = ngx_array_init(get(),
+                    pool ? pool: get()->pool,
+                    n ? n : get()->nalloc,
+                    sizeof(U)
+                    );
+
+        NgxException::require(rc);
+
+        return get();
+    }
+public:
     template<typename V>
     void visit(V v) const
     {
