@@ -121,6 +121,28 @@ public:
     {
         return !get()->part->nelts;
     }
+
+public:
+    void clear() const
+    {
+        get()->part.nelts = 0;
+        get()->part.next = nullptr;
+        get()->last = &get()->part;
+    }
+public:
+    template<typename U>
+    NgxList<U> reshape(ngx_uint_t n = 0, ngx_pool_t* pool = nullptr) const
+    {
+        auto rc = ngx_list_init(get(),
+                    pool ? pool: get()->pool,
+                    n ? n : get()->nalloc,
+                    sizeof(U)
+                    );
+
+        NgxException::require(rc);
+
+        return get();
+    }
 public:
     void merge(const this_type& l) const
     {
