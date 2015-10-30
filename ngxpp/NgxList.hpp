@@ -143,6 +143,11 @@ public:
 
         return get();
     }
+
+    void reinit(ngx_uint_t n = 0) const
+    {
+        reshape<T>(n);
+    }
 public:
     void merge(const this_type& l) const
     {

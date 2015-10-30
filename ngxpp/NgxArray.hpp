@@ -63,6 +63,11 @@ public:
 
         return get();
     }
+
+    void reinit(ngx_uint_t n = 0) const
+    {
+        reshape<T>(n);
+    }
 public:
     template<typename V>
     void visit(V v) const
