@@ -30,7 +30,7 @@ Please see directory "auto".
 
 For example:
 ~~~~
-patch -b make make.path
+patch -b make make.patch
 ~~~~
 
 
