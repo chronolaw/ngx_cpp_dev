@@ -68,6 +68,7 @@ public:
 //        return get()->end - get()->start;
 //    }
 
+public:
     void consume(std::size_t n) const
     {
         if(n > size())
@@ -76,6 +77,16 @@ public:
         }
 
         get()->pos += n;
+    }
+
+    void produce(std::size_t n) const
+    {
+        get()->last += n;
+
+        if(get()->last > get()->end)
+        {
+            get()->last = get()->end;
+        }
     }
 public:
     u_char* begin() const
