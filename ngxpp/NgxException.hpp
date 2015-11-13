@@ -39,30 +39,30 @@ public:
         throw NgxException(rc, msg);
     }
 
-    static void require(bool cond, ngx_int_t e = NGX_ERROR)
+    static void require(bool cond, ngx_int_t e = NGX_ERROR, string_ref_type msg = "")
     {
         if(!cond)
         {
-            raise(e);
+            raise(e, msg);
         }
     }
 
-    static void require(ngx_int_t rc, ngx_int_t x = NGX_OK)
+    static void require(ngx_int_t rc, ngx_int_t x = NGX_OK, string_ref_type msg = "")
     {
-        require(rc == x, rc);
+        require(rc == x, rc, msg);
     }
 
     template<typename T>
-    static void require(T* p, ngx_int_t e = NGX_ERROR)
+    static void require(T* p, ngx_int_t e = NGX_ERROR, string_ref_type msg = "")
     {
-        require(p != nullptr, e);
+        require(p != nullptr, e, msg);
     }
 
-    static void fail(bool cond, ngx_int_t e = NGX_ERROR)
+    static void fail(bool cond, ngx_int_t e = NGX_ERROR, string_ref_type msg = "")
     {
         if(cond)
         {
-            raise(e);
+            raise(e, msg);
         }
     }
 
