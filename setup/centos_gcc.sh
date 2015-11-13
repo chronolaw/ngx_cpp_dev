@@ -1,6 +1,6 @@
 #! /bin/bash
 
-GCC_V='4.7.3'
+GCC_V='4.8.5'
 sudo yum install -y glibc-static libstdc++-static
 
 wget http://ftp.gnu.org/gnu/gcc/gcc-${GCC_V}/gcc-${GCC_V}.tar.gz -O gcc-${GCC_V}.tar.gz
