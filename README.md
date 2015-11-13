@@ -12,6 +12,7 @@ Table of Contents
 * [Usage](#Usage)
 * [Examples](Examples)
 * [C++ APIs](#C++ APIs)
+* [TODO](#TODO)
 
 Requirements
 ============
@@ -19,10 +20,19 @@ Requirements
 * C++11(gcc 4.6 or later)
 * Boost(1.57 or later)
 
+Please see directiory "setup".
+
 Usage
 =====
 At first, you must patch nginx/auto/make to enable g++ compiler and C++11.
-Please see directory "auto"
+
+Please see directory "auto".
+
+For example:
+~~~~
+patch -b make make.path
+~~~~
+
 
 Then configure nginx with:
 ~~~~
@@ -75,3 +85,8 @@ C++ APIs
 * NgxDigest       :
 * NgxTimer        :
 
+TODO
+====
+* nginx script
+* nginx threads
+* ...
