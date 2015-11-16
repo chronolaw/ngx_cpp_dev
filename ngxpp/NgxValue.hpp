@@ -80,13 +80,19 @@ public:
         }
     }
 
-    static void merge(ngx_str_t& c, const ngx_str_t& p, const ngx_str_t& d)
+public:
+    static bool invalid(const ngx_str_t& v)
     {
-        if(!c.data)
-        {
-            c = p.data ? p : d;
-        }
+        return !v.data || !v.len;
     }
+
+    //static void merge(ngx_str_t& c, const ngx_str_t& p, const ngx_str_t& d)
+    //{
+    //    if(!c.data)
+    //    {
+    //        c = p.data ? p : d;
+    //    }
+    //}
 };
 
 #endif  //_NGX_VALUE_HPP
