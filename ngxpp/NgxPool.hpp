@@ -189,6 +189,16 @@ public:
     }
 
 public:
+    template<typename T>
+    ngx_thread_task_t* thread_task() const
+    {
+        auto p = ngx_thread_task_alloc(get(), sizeof(T));
+
+        NgxException::require(p);
+
+        return p;
+    }
+public:
     ngx_file_t* file() const
     {
         auto p = alloc<ngx_file_t>();
