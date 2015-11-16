@@ -188,6 +188,7 @@ public:
         return p;
     }
 
+#if (NGX_THREADS)
 public:
     template<typename T>
     ngx_thread_task_t* thread_task() const
@@ -198,6 +199,7 @@ public:
 
         return p;
     }
+#endif  //NGX_THREADS
 public:
     ngx_file_t* file() const
     {
