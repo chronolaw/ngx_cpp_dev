@@ -36,5 +36,12 @@
 #include "NgxDigest.hpp"
 #include "NgxTimer.hpp"
 #include "NgxVariable.hpp"
+//#include "NgxScript.hpp"
+
+#include "NgxEvent.hpp"
+
+#if (NGX_THREADS)
+#include "NgxThread.hpp"
+#endif  //NGX_THREADS
 
 #endif  //_NGX_ALL_HPP
