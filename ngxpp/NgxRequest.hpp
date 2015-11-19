@@ -78,6 +78,20 @@ public:
     {
         return m_body;
     }
+public:
+    ngx_str_t arg(const ngx_str_t& name) const
+    {
+        ngx_str_t value = ngx_null_string;
+
+        ngx_http_arg(get(), name.data, name.len, &value);
+
+        return value;
+    }
+public:
+    void finalize(ngx_int_t rc = NGX_HTTP_INTERNAL_SERVER_ERROR) const
+    {
+        ngx_http_finalize_request(get(), rc);
+    }
 private:
     headers_type        m_headers;
     body_type           m_body;
@@ -111,6 +125,34 @@ public:
     void length(off_t len) const
     {
         headers()->content_length_n = len;
+    }
+
+public:
+    ngx_uint_t status() const
+    {
+        return headers()->status;
+    }
+
+    off_t length() const
+    {
+        return headers()->content_length_n;
+    }
+public:
+    void set_content_type() const
+    {
+        auto rc = ngx_http_set_content_type(get());
+
+        NgxException::require(rc);
+    }
+
+    void clear_content_length() const
+    {
+        ngx_http_clear_content_length(get());
+    }
+
+    void clear_accept_ranges() const
+    {
+        ngx_http_clear_accept_ranges(get());
     }
 
 public:
@@ -197,6 +239,35 @@ public:
 private:
     headers_type        m_headers;
     NgxPool             m_pool;
+};
+
+class NgxRequestCleanup final : public NgxWrapper<ngx_http_request_t>
+{
+public:
+    typedef NgxWrapper<ngx_http_request_t> super_type;
+    typedef NgxRequestCleanup this_type;
+public:
+    NgxRequestCleanup(ngx_http_request_t* r):super_type(r)
+    {}
+
+    ~NgxRequestCleanup() = default;
+public:
+    template<typename F>
+    ngx_http_cleanup_t* add(F f, std::size_t n = 0) const
+    {
+        auto cln = ngx_http_cleanup_add(get(), n);
+
+        NgxException::require(cln);
+
+        cln->handler = f;
+
+        if(!n)
+        {
+            cln->data = get();
+        }
+
+        return cln;
+    }
 };
 
 #endif  //_NGX_HTTP_REQUEST_HPP
