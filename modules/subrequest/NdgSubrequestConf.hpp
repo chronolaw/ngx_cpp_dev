@@ -28,8 +28,8 @@ public:
         auto prev = reinterpret_cast<this_type*>(parent);
         auto conf = reinterpret_cast<this_type*>(child);
 
-        NgxValue::merge(conf->loc, prev->loc, ngx_string("/echo"));
-        NgxValue::merge(conf->args, prev->args, ngx_null_string);
+        NgxValue::merge(conf->loc, prev->loc, ngx_str_t ngx_string("/echo"));
+        NgxValue::merge(conf->args, prev->args, ngx_str_t ngx_null_string);
 
         return NGX_CONF_OK;
     }
