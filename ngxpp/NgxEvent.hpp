@@ -20,9 +20,15 @@ public:
     ~NgxEvent() = default;
 public:
     template<typename T>
-    void data(T *p) const
+    void data(T* p) const
     {
         get()->data = p;
+    }
+
+    template<typename T>
+    void data(T& v) const
+    {
+        get()->data = &v;
     }
 
     template<typename T>

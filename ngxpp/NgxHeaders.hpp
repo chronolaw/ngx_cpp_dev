@@ -59,6 +59,11 @@ public:
 
         return p->value;
     }
+
+    ngx_str_t operator[](const char* key) const
+    {
+        return operator[](string_ref_type(key));
+    }
 public:
     void add(const kv_type& kv) const
     {

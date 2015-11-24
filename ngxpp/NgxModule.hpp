@@ -86,6 +86,17 @@ public:
         return get<T3>(ctx(cf)->loc_conf);
     }
 
+public:
+    // cycle->conf_ccycle->conf_ctxtx[ngx_http_module.index] must not null
+    META_TYPE(T1) main(ngx_cycle_t* cycle) const
+    {
+        return get<T1>(ctx(cycle)->main_conf);
+    }
+
+    ngx_http_conf_ctx_t* ctx(ngx_cycle_t* cycle) const
+    {
+        return reinterpret_cast<ngx_http_conf_ctx_t*>(cycle->conf_ctx[ngx_http_module.index]);
+    }
 private:
     ngx_http_conf_ctx_t* ctx(ngx_conf_t* cf) const
     {
