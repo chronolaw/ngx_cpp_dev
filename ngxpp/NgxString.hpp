@@ -11,6 +11,10 @@
 
 #include "NgxWrapper.hpp"
 
+// typed nginx string
+#define typed_ngx_string(str) ngx_str_t ngx_string(str)
+#define typed_ngx_null_string ngx_str_t ngx_null_string
+
 class NgxString final : public NgxWrapper<ngx_str_t>
 {
 public:
