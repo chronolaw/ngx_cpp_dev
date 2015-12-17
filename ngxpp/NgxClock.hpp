@@ -41,6 +41,11 @@ public:
         return t.sec + t.msec * 1.0 / 1000;
     }
 public:
+    static decltype(ngx_current_msec)& msec()
+    {
+        return ngx_current_msec;
+    }
+public:
     void sleep(ngx_uint_t sec) const
     {
         ngx_sleep(sec);
