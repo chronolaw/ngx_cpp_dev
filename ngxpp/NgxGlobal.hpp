@@ -75,7 +75,7 @@ public:
         return p;
     }
 public:
-    struct events_info_t final : boost::noncopyable
+    struct event_info_t final : boost::noncopyable
     {
         // ngx_add_event/ngx_del_event/...
         DECL_VAR(actions, ngx_event_actions);
@@ -101,9 +101,9 @@ public:
         DECL_VAR(posted, ngx_posted_events);
     };
 
-    static events_info_t& events()
+    static event_info_t& event()
     {
-        static events_info_t e;
+        static event_info_t e;
         return e;
     }
 public:
