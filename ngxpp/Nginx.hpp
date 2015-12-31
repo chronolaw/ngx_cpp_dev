@@ -5,8 +5,8 @@
 
 extern "C" {
 
-#include <nginx.h>
 #include <ngx_http.h>
+#include <nginx.h>
 
 }
 
