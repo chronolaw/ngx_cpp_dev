@@ -1,14 +1,16 @@
-// Copyright (c) 2015
+// Copyright (c) 2015-2016
 // Author: Chrono Law
 #ifndef _NGX_GLOBAL_HPP
 #define _NGX_GLOBAL_HPP
 
+#include <nginx.h>      // for NGINX_VER...
 #include <boost/noncopyable.hpp>
+
 #include "Nginx.hpp"
 
 #define DECL_VAR(x, y)  decltype(y)& x = y
 
-// apis: os(), err(), events(), process(), signal()
+// apis: os(), err(), event(), process(), signal(), cycle(), env()
 class NgxGlobal final
 {
 public:
@@ -51,7 +53,7 @@ public:
     struct process_info_t final : boost::noncopyable
     {
         // process/worker id
-        DECL_VAR(id, ngx_pid);
+        DECL_VAR(pid, ngx_pid);
 
         // process flag = NGX_PROCESS_MASTER/NGX_PROCESS_SINGLE/...
         DECL_VAR(type, ngx_process);
@@ -121,6 +123,43 @@ public:
     {
         static signal_info_t s;
         return s;
+    }
+public:
+    // we can't use declyte(xxx)& because keyword 'volatile'
+    struct cycle_info_t final : boost::noncopyable
+    {
+        volatile DECL_VAR(connection_n, ngx_cycle->connection_n);
+
+        volatile DECL_VAR(conf_file, ngx_cycle->conf_file);
+        volatile DECL_VAR(conf_param, ngx_cycle->conf_param);
+        volatile DECL_VAR(conf_prefix, ngx_cycle->conf_prefix);
+        volatile DECL_VAR(prefix, ngx_cycle->prefix);
+        volatile DECL_VAR(hostname, ngx_cycle->hostname);
+    };
+
+    static cycle_info_t& cycle()
+    {
+        static cycle_info_t c;
+
+        return c;
+    }
+public:
+    // some macro constants
+    struct env_info_t final : boost::noncopyable
+    {
+        // in nginx.h
+        ngx_str_t version   = ngx_string(NGINX_VER);
+        ngx_str_t build     = ngx_string(NGINX_VER_BUILD);
+
+        // in objs/ngx_auto_config.h
+        ngx_str_t configure = ngx_string(NGX_CONFIGURE);
+        ngx_str_t compiler  = ngx_string(NGX_COMPILER);
+    };
+
+    static env_info_t& env()
+    {
+        static env_info_t e;
+        return e;
     }
 };
 

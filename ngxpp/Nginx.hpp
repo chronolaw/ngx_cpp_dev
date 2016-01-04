@@ -1,4 +1,4 @@
-// Copyright (c) 2015
+// Copyright (c) 2015-2016
 // Author: Chrono Law
 #ifndef _NGX_COMMON_HEADERS_HPP
 #define _NGX_COMMON_HEADERS_HPP
@@ -6,7 +6,6 @@
 extern "C" {
 
 #include <ngx_http.h>
-#include <nginx.h>
 
 }
 
