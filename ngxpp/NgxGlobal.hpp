@@ -8,7 +8,8 @@
 
 #include "Nginx.hpp"
 
-#define DECL_VAR(x, y)  decltype(y)& x = y
+// decltype((xxx)) get the type of expressions!
+#define DECL_VAR(x, y)  decltype((y))& x = y
 
 // apis: os(), err(), event(), process(), signal(), cycle(), env()
 class NgxGlobal final
@@ -54,6 +55,10 @@ public:
     {
         // process/worker id
         DECL_VAR(pid, ngx_pid);
+
+#if (nginx_version >= 1009001)
+        DECL_VAR(worker, ngx_worker);
+#endif
 
         // process flag = NGX_PROCESS_MASTER/NGX_PROCESS_SINGLE/...
         DECL_VAR(type, ngx_process);
@@ -128,13 +133,13 @@ public:
     // we can't use declyte(xxx)& because keyword 'volatile'
     struct cycle_info_t final : boost::noncopyable
     {
-        volatile DECL_VAR(connection_n, ngx_cycle->connection_n);
+        DECL_VAR(connection_n, ngx_cycle->connection_n);
 
-        volatile DECL_VAR(conf_file, ngx_cycle->conf_file);
-        volatile DECL_VAR(conf_param, ngx_cycle->conf_param);
-        volatile DECL_VAR(conf_prefix, ngx_cycle->conf_prefix);
-        volatile DECL_VAR(prefix, ngx_cycle->prefix);
-        volatile DECL_VAR(hostname, ngx_cycle->hostname);
+        DECL_VAR(conf_file, ngx_cycle->conf_file);
+        DECL_VAR(conf_param, ngx_cycle->conf_param);
+        DECL_VAR(conf_prefix, ngx_cycle->conf_prefix);
+        DECL_VAR(prefix, ngx_cycle->prefix);
+        DECL_VAR(hostname, ngx_cycle->hostname);
     };
 
     static cycle_info_t& cycle()
