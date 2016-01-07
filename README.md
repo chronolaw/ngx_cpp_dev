@@ -26,7 +26,7 @@ Usage
 =====
 At first, you must patch nginx/auto/make to enable g++ compiler and C++11.
 
-Please see directory "auto".
+Please see directory *"auto"*.
 
 For example:
 ~~~~
@@ -49,7 +49,7 @@ ngx_cpp_module is a pure header library, you should use ngx_cpp_module like this
 
 Examples
 ========
-Please see directory modules, include echo/filter/variables.
+Please see directory *modules*, include echo/filter/variables.
 
 C++ APIs
 ========
@@ -88,5 +88,5 @@ C++ APIs
 TODO
 ====
 * nginx script
-* nginx threads
+* nginx rbtree
 * ...
