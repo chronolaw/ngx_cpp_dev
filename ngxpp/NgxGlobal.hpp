@@ -9,7 +9,7 @@
 #include "Nginx.hpp"
 
 // decltype((xxx)) get the type of expressions!
-#define DECL_VAR(x, y)  decltype((y))& x = y
+#define DECL_VAR(x, y)  decltype((y)) x = y
 
 // apis: os(), err(), event(), process(), signal(), cycle(), env()
 class NgxGlobal final
