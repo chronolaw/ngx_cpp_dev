@@ -3,6 +3,10 @@
 #ifndef _NGX_COMMON_HEADERS_HPP
 #define _NGX_COMMON_HEADERS_HPP
 
+#if __cplusplus < 201103L
+    #error "ngx_cpp_module need C++11 implementation!"
+#endif
+
 extern "C" {
 
 #include <ngx_http.h>
