@@ -1,4 +1,4 @@
-// Copyright (c) 2015
+// Copyright (c) 2015-2016
 // Author: Chrono Law
 #ifndef _NGX_CLOCK_HPP
 #define _NGX_CLOCK_HPP
@@ -46,12 +46,12 @@ public:
         return ngx_current_msec;
     }
 public:
-    void sleep(ngx_uint_t sec) const
+    static void sleep(ngx_uint_t sec)
     {
         ngx_sleep(sec);
     }
 
-    void msleep(ngx_uint_t msec) const
+    static void msleep(ngx_uint_t msec)
     {
         ngx_msleep(msec);
     }
