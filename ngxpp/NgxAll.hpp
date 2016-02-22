@@ -1,4 +1,4 @@
-// Copyright (c) 2015
+// Copyright (c) 2015-2016
 // Author: Chrono Law
 #ifndef _NGX_ALL_HPP
 #define _NGX_ALL_HPP
@@ -19,6 +19,7 @@
 #include "NgxArray.hpp"
 #include "NgxList.hpp"
 #include "NgxQueue.hpp"
+#include "NgxRbtree.hpp"
 #include "NgxBuf.hpp"
 //#include "NgxFile.hpp"
 
@@ -36,9 +37,10 @@
 #include "NgxDigest.hpp"
 #include "NgxTimer.hpp"
 #include "NgxVariable.hpp"
-//#include "NgxScript.hpp"
+#include "NgxScript.hpp"
 
 #include "NgxEvent.hpp"
+#include "NgxGlobal.hpp"
 
 #if (NGX_THREADS)
 #include "NgxThread.hpp"
