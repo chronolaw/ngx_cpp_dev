@@ -289,6 +289,14 @@ public:
             c.data().clear();
         }
     }
+public:
+    void copy(u_char* p) const
+    {
+        for(auto& c : *this)
+        {
+            p = ngx_copy(p, c.data().begin(), c.data().size());
+        }
+    }
 };
 
 #endif  //_NGX_BUF_HPP
