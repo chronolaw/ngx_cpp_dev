@@ -92,6 +92,10 @@ public:
     }
 };
 
+// for config error message
+#define NGX_CONF_ERROR_MSG(s)   const_cast<char*>(s)
+
+// for module's null
 #include <boost/preprocessor/repetition/enum.hpp>
 
 #define NGX_NULL_HELPER(z, n, t) t
