@@ -4,7 +4,7 @@ ngx_cpp_dev
 
 Nginx cpp development kit, with the power of C++11 and Boost Library.
 
-See also [annotated_nginx](https://github.com/chronolaw/annotated_nginx) - 注释nginx1.8.1，学习研究源码
+See also [annotated_nginx](https://github.com/chronolaw/annotated_nginx) (注释nginx1.8.1，学习研究源码)
 
 Table of Contents
 =================
