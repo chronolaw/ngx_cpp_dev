@@ -21,6 +21,7 @@
 #include "NgxQueue.hpp"
 #include "NgxRbtree.hpp"
 #include "NgxBuf.hpp"
+#include "NgxKeyValue.hpp"
 //#include "NgxFile.hpp"
 
 #include "NgxConfig.hpp"
@@ -45,5 +46,9 @@
 #if (NGX_THREADS)
 #include "NgxThread.hpp"
 #endif  //NGX_THREADS
+
+#if (nginx_version >= 1009000)
+#include "NgxStreamModule.hpp"
+#endif
 
 #endif  //_NGX_ALL_HPP
