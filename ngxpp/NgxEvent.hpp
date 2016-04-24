@@ -31,16 +31,27 @@ public:
         get()->data = &v;
     }
 
+public:
     template<typename T>
-    T& data() const
+    T* data() const
     {
-        return *reinterpret_cast<T>(get()->data);
+        return reinterpret_cast<T>(get()->data);
+    }
+
+    ngx_connection_t* connection() const
+    {
+        return data<ngx_connection_t>();
     }
 public:
     template<typename F>
     void handler(F f) const
     {
         get()->handler = f;
+    }
+public:
+    void process() const
+    {
+        get()->handler(get());
     }
 };
 
