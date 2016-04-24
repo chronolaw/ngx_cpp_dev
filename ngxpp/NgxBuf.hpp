@@ -69,6 +69,16 @@ public:
 //    }
 
 public:
+    bool empty() const
+    {
+        return get()->pos == get()->last;
+    }
+
+    bool full() const
+    {
+        return get()->pos == get()->end;
+    }
+public:
     void consume(std::size_t n) const
     {
         if(n > size())
