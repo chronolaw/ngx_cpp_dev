@@ -63,6 +63,13 @@ public:
     {
         get()->pos = get()->last;
     }
+
+    void reset() const
+    {
+        get()->pos = get()->start;
+        get()->last = get()->start;
+    }
+
 //    ngx_uint_t capacity() const
 //    {
 //        return get()->end - get()->start;
