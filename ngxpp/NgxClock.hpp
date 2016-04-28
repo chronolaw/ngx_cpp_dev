@@ -41,7 +41,7 @@ public:
         return t.sec + t.msec * 1.0 / 1000;
     }
 public:
-    static decltype(ngx_current_msec)& msec()
+    static decltype((ngx_current_msec)) msec()
     {
         return ngx_current_msec;
     }
