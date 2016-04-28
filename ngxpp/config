@@ -1,6 +1,15 @@
 #./configure --add-module=$HOME/ngx_cpp_dev/ngxpp
 
+# cpp module name
 ngx_addon_name=ngx_cpp_module
 
+# http modules
 HTTP_INCS="$HTTP_INCS $ngx_addon_dir"
+
+# stream modules
+if [ $STREAM != NO ]; then
+    STREAM_INCS="$HTTP_INCS $ngx_addon_dir"
+fi
+
+#CORE_LIBS="$CORE_LIBS -static-libgcc -static-libstdc++"
 
