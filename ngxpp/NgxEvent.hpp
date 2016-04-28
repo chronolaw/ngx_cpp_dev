@@ -35,7 +35,7 @@ public:
     template<typename T>
     T* data() const
     {
-        return reinterpret_cast<T>(get()->data);
+        return reinterpret_cast<T*>(get()->data);
     }
 
     ngx_connection_t* connection() const
