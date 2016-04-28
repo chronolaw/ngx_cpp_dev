@@ -47,8 +47,8 @@
 #include "NgxThread.hpp"
 #endif  //NGX_THREADS
 
-#if (nginx_version >= 1009000)
-#include "NgxStreamModule.hpp"
-#endif
+//#if (nginx_version >= 1009000)
+//#include "NgxStreamModule.hpp"
+//#endif
 
 #endif  //_NGX_ALL_HPP
