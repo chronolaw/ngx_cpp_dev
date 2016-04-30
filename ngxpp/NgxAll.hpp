@@ -47,10 +47,4 @@
 #include "NgxThread.hpp"
 #endif  //NGX_THREADS
 
-// nginx 1.9.0 and later has stream module
-// must patch auto/modules to add macro NGX_STREAM
-#if ((nginx_version >= 1009000) && (NGX_STREAM))
-#include "NgxStreamModule.hpp"
-#endif  // nginx 1.9.0
-
 #endif  //_NGX_ALL_HPP
