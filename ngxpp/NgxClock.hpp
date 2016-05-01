@@ -3,7 +3,7 @@
 #ifndef _NGX_CLOCK_HPP
 #define _NGX_CLOCK_HPP
 
-#include "Nginx.hpp"
+//#include "Nginx.hpp"
 
 class NgxClock final
 {
