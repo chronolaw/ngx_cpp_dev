@@ -10,7 +10,7 @@ extern "C" {
 }
 
 #include <boost/utility/string_ref.hpp>
-#include "Nginx.hpp"
+//#include "Nginx.hpp"
 
 struct NgxMd5Meta
 {
