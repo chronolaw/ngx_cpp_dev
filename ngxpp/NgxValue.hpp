@@ -3,7 +3,7 @@
 #ifndef _NGX_VALUE_HPP
 #define _NGX_VALUE_HPP
 
-#include "Nginx.hpp"
+//#include "Nginx.hpp"
 
 // NGX_CONF_UNSET = -1
 class NgxUnsetValue final
