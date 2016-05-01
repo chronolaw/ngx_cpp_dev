@@ -6,7 +6,7 @@
 #include <nginx.h>      // for NGINX_VER...
 #include <boost/noncopyable.hpp>
 
-#include "Nginx.hpp"
+//#include "Nginx.hpp"
 
 // decltype((xxx)) get the type of expressions!
 #define DECL_VAR(x, y)  decltype((y)) x = y
