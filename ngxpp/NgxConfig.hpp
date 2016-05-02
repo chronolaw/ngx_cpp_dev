@@ -5,6 +5,14 @@
 
 #include "NgxArray.hpp"
 
+#ifndef NGX_CPP_DEV_CMD_OFFSET
+#define NGX_CPP_DEV_CMD_OFFSET NGX_HTTP_LOC_CONF_OFFSET
+#endif
+
+#ifndef NGX_CPP_DEV_CMD_TYPE
+#define NGX_CPP_DEV_CMD_TYPE NGX_HTTP_LOC_CONF
+#endif
+
 class NgxCommand final
 {
 private:
@@ -12,7 +20,7 @@ private:
 public:
     template<typename T>
     NgxCommand(const ngx_str_t& n, ngx_uint_t t, T set,
-            ngx_uint_t c = NGX_HTTP_LOC_CONF_OFFSET,
+            ngx_uint_t c = NGX_CPP_DEV_CMD_OFFSET,
             ngx_uint_t off = 0, void* p = nullptr):
         m_cmd{n, t, set, c, off, p}     //do not use () to initilize
     {}
@@ -29,7 +37,7 @@ public:
 class NgxTake final
 {
 public:
-    NgxTake(ngx_uint_t conf, int m, int n = -1):
+    NgxTake(ngx_uint_t conf, int m = 0, int n = -1):
         m_type(conf | take(m, n))
     {}
     ~NgxTake() = default;
@@ -39,7 +47,7 @@ public:
         return m_type;
     }
 private:
-    ngx_uint_t m_type = NGX_HTTP_LOC_CONF;
+    ngx_uint_t m_type = NGX_CPP_DEV_CMD_TYPE;
 private:
     static ngx_uint_t take(int m, int n)
     {
