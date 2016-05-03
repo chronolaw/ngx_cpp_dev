@@ -27,7 +27,7 @@ public:
 
     // T = NgxConnection,NgxRequest,...
     template<typename T>
-    NgxPool(T x):NgxPool(x.get())
+    NgxPool(const T& x):NgxPool(x.get())
     {}
 
     ~NgxPool() = default;
