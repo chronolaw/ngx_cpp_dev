@@ -11,6 +11,9 @@ extern "C" {
 
 #include <ngx_http.h>
 
+// in ngx_http_core_module.h
+//#include <ngx_thread_pool.h>
+
 }
 
 #include <cassert>

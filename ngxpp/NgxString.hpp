@@ -110,6 +110,13 @@ public:
         return o;
     }
 
+    template<typename T>
+    friend T& operator<<(T& o, const volatile ngx_str_t& s)
+    {
+        o.write(reinterpret_cast<const char*>(s.data), s.len);
+        return o;
+    }
+
     friend bool operator==(const this_type& l, const this_type& r)
     {
         return l.size() == r.size() &&

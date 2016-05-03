@@ -3,7 +3,7 @@
 #ifndef _NGX_CLOCK_HPP
 #define _NGX_CLOCK_HPP
 
-#include "Nginx.hpp"
+//#include "Nginx.hpp"
 
 class NgxClock final
 {
@@ -41,7 +41,7 @@ public:
         return t.sec + t.msec * 1.0 / 1000;
     }
 public:
-    static decltype(ngx_current_msec)& msec()
+    static decltype((ngx_current_msec)) msec()
     {
         return ngx_current_msec;
     }

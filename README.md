@@ -89,6 +89,5 @@ C++ APIs
 
 TODO
 ====
-* nginx script
-* nginx rbtree
+* nginx stream
 * ...

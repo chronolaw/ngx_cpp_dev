@@ -5,7 +5,7 @@
 
 #include <type_traits>
 
-#include "Nginx.hpp"
+//#include "Nginx.hpp"
 #include "NgxWrapper.hpp"
 
 template<typename T,                    // data type

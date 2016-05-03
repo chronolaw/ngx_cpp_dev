@@ -3,7 +3,7 @@
 #ifndef _NGX_EVENT_HPP
 #define _NGX_EVENT_HPP
 
-#include "Nginx.hpp"
+//#include "Nginx.hpp"
 
 class NgxEvent final : public NgxWrapper<ngx_event_t>
 {

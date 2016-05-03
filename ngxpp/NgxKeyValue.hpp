@@ -3,7 +3,7 @@
 #ifndef _NGX_KEYVALUE_HPP
 #define _NGX_KEYVALUE_HPP
 
-#include "Nginx.hpp"
+//#include "Nginx.hpp"
 
 // ngx_string.h
 //

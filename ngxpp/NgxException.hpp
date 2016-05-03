@@ -8,7 +8,7 @@
 #include <boost/exception/all.hpp>
 #include <boost/utility/string_ref.hpp>
 
-#include "Nginx.hpp"
+//#include "Nginx.hpp"
 
 class NgxException final : public virtual std::exception,
                            public virtual boost::exception
