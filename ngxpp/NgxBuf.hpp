@@ -54,6 +54,12 @@ public:
             static_cast<std::size_t>(get()->end - get()->start), get()->start};
     }
 public:
+    template<typename ... Args>
+    void printf(const Args& ... args) const
+    {
+        get()->last = ngx_slprintf(get()->pos, get()->end, args ...);
+    }
+public:
     std::size_t size() const
     {
         return ngx_buf_size(get());

@@ -25,6 +25,11 @@ public:
     NgxPool(T* x):NgxPool(x->pool)
     {}
 
+    // T = NgxConnection,NgxRequest,...
+    template<typename T>
+    NgxPool(T x):NgxPool(x.get())
+    {}
+
     ~NgxPool() = default;
 public:
     template<typename T, bool no_exception = false>
@@ -122,7 +127,7 @@ public:
                    alloc<ngx_buf_t>()//ngx_calloc_buf(get())
                    ;
 
-        NgxException::require(tmp, NGX_HTTP_INTERNAL_SERVER_ERROR);
+        NgxException::require(tmp); //, NGX_HTTP_INTERNAL_SERVER_ERROR);
 
         return tmp;
     }
