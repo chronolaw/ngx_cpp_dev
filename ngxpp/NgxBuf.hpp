@@ -59,6 +59,11 @@ public:
     {
         get()->last = ngx_slprintf(get()->pos, get()->end, args ...);
     }
+
+    void copy(u_char* src, size_t n) const
+    {
+        get()->last = ngx_copy(get()->pos, src, n);
+    }
 public:
     std::size_t size() const
     {
