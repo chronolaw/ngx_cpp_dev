@@ -3,8 +3,11 @@
 #ifndef _NGX_POOL_HPP
 #define _NGX_POOL_HPP
 
-//#include <new>
 #include <boost/type_traits.hpp>
+#include <boost/mpl/logical.hpp>
+#include <boost/tti/has_member_data.hpp>
+#include <boost/tti/member_type.hpp>
+#include <boost/utility/enable_if.hpp>
 #include <boost/utility/string_ref.hpp>
 
 #include "NgxException.hpp"
@@ -19,18 +22,44 @@ public:
     NgxPool(ngx_pool_t* p): super_type(p)
     {}
 
+    ~NgxPool() = default;
+public:
+    // check member pool or connection with boost.tti
+    BOOST_TTI_HAS_MEMBER_DATA(pool)
+    BOOST_TTI_HAS_MEMBER_DATA(connection)
+    BOOST_TTI_MEMBER_TYPE(wrapped_type)
+
     // T = ngx_http_request_t,ngx_conf_t, ...
     // T must has a member pool
     template<typename T>
-    NgxPool(T* x):NgxPool(x->pool)
+    NgxPool(T* x,
+           typename boost::enable_if<
+                has_member_data_pool<T, ngx_pool_t*>>::type* p = 0):
+        NgxPool(x->pool)
+    {}
+
+    // T = ngx_stream_session_t
+    template<typename T>
+    NgxPool(T* x,
+            typename boost::enable_if<
+                boost::mpl::and_<
+                    has_member_data_connection<T, ngx_connection_t*>,
+                    boost::mpl::not_<has_member_data_pool<T, ngx_pool_t*>>
+                    >
+                >::type* p = 0):
+        NgxPool(x->connection)
     {}
 
     // T = NgxConnection,NgxRequest,...
     template<typename T>
-    NgxPool(const T& x):NgxPool(x.get())
+    NgxPool(const T& x,
+           typename boost::enable_if<
+                boost::tti::valid_member_type<
+                    member_type_wrapped_type<T>>
+                >::type* p = 0):
+        NgxPool(x.get())
     {}
 
-    ~NgxPool() = default;
 public:
     template<typename T, bool no_exception = false>
     T* palloc() const
