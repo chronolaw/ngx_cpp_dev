@@ -1,5 +1,5 @@
 // Author: Chrono Law
-// Copyright (c) 2015
+// Copyright (c) 2015-2016
 #ifndef _NGX_BUF_HPP
 #define _NGX_BUF_HPP
 
@@ -296,6 +296,12 @@ public:
         return len;
     }
 
+public:
+    ngx_chain_t* head() const
+    {
+        return get();
+    }
+
     ngx_chain_t* tail() const
     {
         auto p = get();
@@ -308,6 +314,25 @@ public:
     void append(ngx_chain_t* ch) const
     {
         tail()->next = ch;
+    }
+
+public:
+    // V is a lambda
+    // [](ngx_chain_t* c){}
+    // [](const NgxChainNode& c){}
+    template<typename V>
+    iterator trace_tail(V v) const
+    {
+        auto p = get();
+
+        for(;p->next;p = p->next)
+        {
+            v(p);
+        }
+
+        v(p);   // last node
+
+        return p;
     }
 public:
     void clear() const
