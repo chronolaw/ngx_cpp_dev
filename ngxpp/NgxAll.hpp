@@ -21,6 +21,7 @@
 #include "NgxQueue.hpp"
 #include "NgxRbtree.hpp"
 #include "NgxBuf.hpp"
+#include "NgxChain.hpp"
 #include "NgxKeyValue.hpp"
 //#include "NgxFile.hpp"
 
