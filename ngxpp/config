@@ -8,7 +8,7 @@ HTTP_INCS="$HTTP_INCS $ngx_addon_dir"
 
 # stream modules
 #if [ $STREAM != NO ]; then
-#    STREAM_INCS="$HTTP_INCS $ngx_addon_dir"
+#    STREAM_INCS="$STREAM_INCS $ngx_addon_dir"
 #fi
 
 #CORE_LIBS="$CORE_LIBS -static-libgcc -static-libstdc++"

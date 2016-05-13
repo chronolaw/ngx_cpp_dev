@@ -5,7 +5,7 @@
 
 #include <boost/type_traits.hpp>
 
-#include "Nginx.hpp"
+//#include "Nginx.hpp"
 
 // T = ngx_list_t, ngx_array_t, ngx_pool_t, ...
 template<typename T>
@@ -48,6 +48,11 @@ public:
     operator bool () const
     {
         return get();
+    }
+public:
+    operator reference_type () const
+    {
+        return *get();
     }
 };
 
