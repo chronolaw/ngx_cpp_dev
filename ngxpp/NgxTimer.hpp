@@ -1,4 +1,4 @@
-// Copyright (c) 2015
+// Copyright (c) 2015-2016
 // Author: Chrono Law
 #ifndef _NGX_TIMER_HPP
 #define _NGX_TIMER_HPP
@@ -10,15 +10,19 @@
 #include "NgxValue.hpp"
 
 template<typename T>
-class NgxTimerEvent final
+class NgxTimerEv final
 {
 public:
-    NgxTimerEvent() = default;
-    ~NgxTimerEvent() = default;
+    typedef NgxTimerEv  this_type;
+    typedef T           factory_type;
+public:
+    NgxTimerEv() = default;
+    ~NgxTimerEv() = default;
 public:
     typedef boost::function<void()> func_type;
 public:
-    ngx_int_t init(ngx_msec_t ms, func_type f)
+    // f can be bind or lambda
+    void init(func_type f, ngx_msec_t ms = ngx_nil)
     {
         m_func = f;
 
@@ -28,13 +32,55 @@ public:
         m_ev.data = this;
         m_ev.log = ngx_cycle->log;
 
-        ngx_add_timer(&m_ev, ms);
+        if(NgxValue::invalid(ms))
+        {
+            return;
+        }
 
-        return NGX_OK;
+        start(ms);
     }
 
+    void start(ngx_msec_t ms)
+    {
+        ngx_add_timer(&m_ev, ms);
+    }
+
+public:
+    // deprecated
+    ngx_int_t init(ngx_msec_t ms, func_type f)
+    {
+        init(f, ms);
+        return NGX_OK;
+    }
+public:
+    void clear()
+    {
+        //m_ev.timedout = false;
+
+        if(m_ev.timer_set)
+        {
+            ngx_del_timer(&m_ev);
+        }
+    }
+public:
+    //void cleanup(ngx_http_request_t* r) const
+    //{
+    //    auto cln = ngx_http_cleanup_add(r, 0);
+
+    //    NgxException::require(cln);
+
+    //    cln->handler = &this_type::cleanup_handler;
+    //    cln->data = this;
+    //}
+
+public:
     void operator()() const
     {
+        if(!m_ev.timedout)      // not timedout, do not call func
+        {
+            return;
+        }
+
         m_func();
     }
 private:
@@ -45,7 +91,7 @@ private:
 class NgxTimer final
 {
 public:
-    typedef NgxTimerEvent<NgxTimer> timer_event_type;
+    typedef NgxTimerEv<NgxTimer> timer_event_type;
     typedef timer_event_type::func_type func_type;
 public:
     NgxTimer() = default;
@@ -55,12 +101,15 @@ public:
     {
         return acquire().init(ms, f);
     }
+
 public:
     static void call(ngx_event_t *ev)
     {
         auto& e = *reinterpret_cast<timer_event_type*>(ev->data);
 
         e();
+
+        //e.clear();
 
         release(e);
     }
@@ -73,6 +122,7 @@ private:
         return p;
     }
 
+private:
     static timer_event_type& acquire()
     {
         if(pool().empty())
@@ -91,6 +141,22 @@ private:
         pool().push_back(&e);
     }
 };
+
+class NgxTimerCaller final
+{
+public:
+    typedef NgxTimerEv<NgxTimerCaller> timer_event_type;
+    typedef timer_event_type::func_type func_type;
+public:
+    static void call(ngx_event_t *ev)
+    {
+        auto& e = *reinterpret_cast<timer_event_type*>(ev->data);
+
+        e();
+    }
+};
+
+typedef NgxTimerCaller::timer_event_type NgxTimerEvent;
 
 #endif  //_NGX_TIMER_HPP
 
