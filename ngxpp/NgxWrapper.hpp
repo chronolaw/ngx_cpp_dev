@@ -1,4 +1,4 @@
-// Copyright (c) 2015
+// Copyright (c) 2015-2016
 // Author: Chrono Law
 #ifndef _NGX_WRAPPER_HPP
 #define _NGX_WRAPPER_HPP
@@ -49,11 +49,11 @@ public:
     {
         return get();
     }
-public:
-    operator reference_type () const
-    {
-        return *get();
-    }
+//public:
+//    operator reference_type () const
+//    {
+//        return *get();
+//    }
 };
 
 #endif  //_NGX_WRAPPER_HPP

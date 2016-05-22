@@ -1,4 +1,4 @@
-// Copyright (c) 2015
+// Copyright (c) 2015-2016
 // Author: Chrono Law
 #ifndef _NGX_VAR_HPP
 #define _NGX_VAR_HPP
@@ -29,6 +29,11 @@ public:
         get()->valid = true;
         get()->not_found = false;
         get()->no_cacheable = false;
+    }
+
+    void set(ngx_str_t* str)
+    {
+        set(*str);
     }
 
     void clear()
