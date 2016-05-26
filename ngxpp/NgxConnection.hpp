@@ -3,7 +3,13 @@
 #ifndef _NGX_CONNECTION_HPP
 #define _NGX_CONNECTION_HPP
 
+#include <boost/type_traits.hpp>
+#include <boost/tti/member_type.hpp>
+#include <boost/utility/enable_if.hpp>
+
 #include "NgxWrapper.hpp"
+#include "NgxException.hpp"
+#include "NgxEvent.hpp"
 
 class NgxConnection final : public NgxWrapper<ngx_connection_t>
 {
@@ -14,61 +20,91 @@ public:
     NgxConnection(ngx_connection_t* c) : super_type(c)
     {}
 
+    ~NgxConnection() = default;
+public:
     NgxConnection(ngx_event_t *ev) :
         super_type(reinterpret_cast<ngx_connection_t*>(ev->data))
     {}
 
-    ~NgxConnection() = default;
-public:
-    // for http modules
-    NgxConnection(ngx_http_request_t* r) : super_type(r->connection)
+    // for http/stream modules
+    template<typename T>
+    NgxConnection(T* x) : super_type(x->connection)
     {}
 
 public:
-    ngx_http_request_t* http_request() const
+    BOOST_TTI_MEMBER_TYPE(wrapped_type)
+
+    // for NgxSession/NgxRequest
+    template<typename T>
+    NgxConnection(const T& x,
+           typename boost::enable_if<
+                boost::tti::valid_member_type<
+                    member_type_wrapped_type<T>>
+                >::type* p = 0):
+        NgxConnection(x.get())
+    {}
+public:
+    // T = ngx_http_request_t/ngx_stream_session_t
+    template<typename T>
+    T* data() const
     {
-        return reinterpret_cast<ngx_http_request_t*>(get()->data);
+        return reinterpret_cast<T*>(get()->data);
     }
 public:
-    void read_handler(ngx_event_handler_pt h) const
+    ngx_event_t* read_event() const
     {
-        get()->read->handler = h;
+        return get()->read;
     }
 
-    void read_timeout(ngx_msec_t timer) const
+    ngx_event_t* write_event() const
     {
-        ngx_add_timer(get()->read, timer);
-    }
-
-    ngx_int_t read_event(ngx_uint_t flags = 0) const
-    {
-        return ngx_handle_read_event(get()->read, flags);
+        return get()->write;
     }
 public:
-    void write_handler(ngx_event_handler_pt h) const
+    ssize_t recv(u_char *buf, size_t size) const noexcept
     {
-        get()->write->handler = h;
+        return get()->recv(get(), buf, size);
     }
 
-    void write_timeout(ngx_msec_t timer) const
+    ssize_t send(u_char *buf, size_t size) const noexcept
     {
-        ngx_add_timer(get()->write, timer);
-    }
-
-    ngx_int_t write_event(size_t lowat) const
-    {
-        return ngx_handle_write_event(get()->write, lowat);
+        return get()->send(get(), buf, size);
     }
 public:
+    ssize_t send(ngx_buf_t *buf) const noexcept
+    {
+        return send(buf->pos, ngx_buf_size(buf));
+    }
+
+    ngx_chain_t* send(ngx_chain_t *in, off_t limit = 0) const noexcept
+    {
+        return get()->send_chain(get(), in, limit);
+    }
+public:
+    void free() const
+    {
+        ngx_free_connection(get());
+    }
+
+    void reusable(bool is_reusable) const
+    {
+        ngx_reusable_connection(get(), is_reusable);
+    }
+public:
+    bool closed() const
+    {
+        return get()->close;
+    }
+
     void close() const
     {
         ngx_close_connection(get());
     }
 
-    void http_close() const
-    {
-        ngx_http_close_connection(get());
-    }
+    //void http_close() const
+    //{
+    //    ngx_http_close_connection(get());
+    //}
 };
 
 
