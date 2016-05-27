@@ -100,4 +100,18 @@ namespace {
 auto&& ngx_nil = NgxUnsetValue::get();
 }
 
+// convenient compare
+
+template<typename T>
+bool operator==(const T& x, const NgxUnsetValue&)
+{
+    return NgxValue::invalid(x);
+}
+
+template<typename T>
+bool operator!=(const T& x, const NgxUnsetValue&)
+{
+    return !NgxValue::invalid(x);
+}
+
 #endif  //_NGX_VALUE_HPP
