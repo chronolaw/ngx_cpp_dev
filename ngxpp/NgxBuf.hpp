@@ -29,13 +29,6 @@ public:
         get()->memory = true;
     }
 
-    // convenitable method
-    void range(ngx_str_t* s) const
-    {
-        range(s->data, s->data + s->len);
-        boundary(s->data, s->data + s->len);
-    }
-
     void boundary(u_char* a, u_char* b) const
     {
         get()->start = a;
@@ -52,6 +45,18 @@ public:
     {
         return ngx_str_t{
             static_cast<std::size_t>(get()->end - get()->start), get()->start};
+    }
+public:
+    // convenitable method
+    void range(ngx_str_t* s) const
+    {
+        range(s->data, s->data + s->len);
+        boundary(s->data, s->data + s->len);
+    }
+
+    void range(ngx_str_t& s) const
+    {
+        range(&s);
     }
 public:
     template<typename ... Args>
