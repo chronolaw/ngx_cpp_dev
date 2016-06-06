@@ -30,3 +30,6 @@
 # tmp
 *.swp
 *.swo
+
+# test nginx
+servroot/
