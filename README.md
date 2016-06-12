@@ -51,7 +51,7 @@ ngx_cpp_module is a pure header library, you should use ngx_cpp_module like this
 
 Examples
 ========
-Please see directory *modules*, include echo/filter/variables.
+Please see directory *modules*, such as echo/filter/variables.
 
 C++ APIs
 ========
@@ -89,5 +89,7 @@ C++ APIs
 
 TODO
 ====
+* more test suites
 * nginx stream
+* nginx datagram
 * ...
