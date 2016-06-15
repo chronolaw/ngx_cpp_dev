@@ -51,10 +51,13 @@ ngx_cpp_module is a pure header library, you should use ngx_cpp_module like this
 
 Examples
 ========
-Please see directory *modules*, such as echo/filter/variables.
+Please see directory *modules*, including echo/filter/variables and so on.
 
 C++ APIs
 ========
+
+common tools
+------
 * NgxUnsetValue   : generic unset value -1.
 * NgxValue        : wrapper for nginx int, include init/merge/unset.
 * NgxException    : wrapper for nginx error code.
@@ -64,11 +67,17 @@ C++ APIs
 * NgxClock        : wrapper for nginx time functions.
 * NgxDatetime     : wrapper for nginx date functions.
 * NgxLog          : wrapper for nginx error log.
+
+data structure
+------
 * NgxArray        : wrapper for nginx ngx_array_t.
 * NgxList         : wrapper for nginx ngx_list_t.
 * NgxQueue        : wrapper for nginx ngx_queue_t.
 * NgxBuf          : wrapper for nginx ngx_buf_t.
 * NgxChain        : wrapper for nginx ngx_chain_t.
+
+modules
+------
 * NgxModuleConfig : easy to access nginx module confing info.
 * NgxModule       : get module's config and ctx data.
 * NgxCommand      : wrapper for nginx ngx_command_t.
@@ -76,12 +85,18 @@ C++ APIs
 * NgxModuleCtx    : easy to access nginx module's ctx data.
 * NgxHttpCoreModule:wrapper for ngx_http_core_module
 * NgxFilter       : wrapper for nginx filter mechanism.
+
+http process
+------
 * NgxHeaders      : 
 * NgxRequest      :
 * NgxResponse     :
 * NgxUpstreamHelper:
 * NgxLoadBalance  :
 * NgxSubRequest   :
+
+othres
+------
 * NgxVariables    :
 * NgxVarManager   :
 * NgxDigest       :
