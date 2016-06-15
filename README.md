@@ -95,7 +95,7 @@ http process
 * NgxLoadBalance  :
 * NgxSubRequest   :
 
-othres
+others
 ------
 * NgxVariables    :
 * NgxVarManager   :
