@@ -42,6 +42,7 @@
 #include "NgxScript.hpp"
 
 #include "NgxEvent.hpp"
+#include "NgxConnection.hpp"
 #include "NgxGlobal.hpp"
 
 #if (NGX_THREADS)
