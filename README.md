@@ -28,7 +28,7 @@ Usage
 =====
 At first, you must patch nginx/auto/make to enable g++ compiler and C++11.
 
-Please see directory *"auto"*.
+Please see directory *"patch/auto"*.
 
 For example:
 ~~~~
