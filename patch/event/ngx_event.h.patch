@@ -1,0 +1,11 @@
+--- ngx_event.h	2016-07-01 09:33:11.673476327 +0800
++++ ngx_event.h.bak	2016-07-01 09:32:30.152760347 +0800
+@@ -488,7 +488,7 @@
+ 
+ 
+ #define ngx_event_get_conf(conf_ctx, module)                                  \
+-             (*(ngx_get_conf(conf_ctx, ngx_events_module))) [module.ctx_index]
++             (*(ngx_get_conf(conf_ctx, ngx_events_module))) [module.ctx_index];
+ 
+ 
+ 
