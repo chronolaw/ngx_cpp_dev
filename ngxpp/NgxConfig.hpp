@@ -13,6 +13,7 @@
 #define NGX_CPP_DEV_CMD_TYPE NGX_HTTP_LOC_CONF
 #endif
 
+// deprecated in future
 class NgxCommand final
 {
 private:
@@ -102,6 +103,12 @@ public:
 
 // for config error message
 #define NGX_CONF_ERROR_MSG(s)   const_cast<char*>(s)
+
+// #define NGX_CONF_ERROR       (void *) -1
+#ifdef NGX_CONF_ERROR
+    #undef  NGX_CONF_ERROR
+    #define NGX_CONF_ERROR reinterpret_cast<char*>(-1)
+#endif
 
 // for module's null
 #include <boost/preprocessor/repetition/enum.hpp>
