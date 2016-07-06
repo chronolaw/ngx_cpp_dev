@@ -3,7 +3,6 @@
 #ifndef _NGX_GLOBAL_HPP
 #define _NGX_GLOBAL_HPP
 
-#include <nginx.h>      // for NGINX_VER...
 #include <boost/noncopyable.hpp>
 
 //#include "Nginx.hpp"

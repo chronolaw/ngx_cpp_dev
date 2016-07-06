@@ -3,6 +3,8 @@
 #ifndef _NGX_COMMON_HEADERS_HPP
 #define _NGX_COMMON_HEADERS_HPP
 
+#include <nginx.h>      // for NGINX_VER...
+
 #if __cplusplus < 201103L
     #error "ngx_cpp_module need C++11 implementation!"
 #endif
