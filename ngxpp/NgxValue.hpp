@@ -43,6 +43,7 @@ public:
 
     static void unset() {}
 
+public:
     template<typename T>
     static bool invalid(const T& v)
     {
