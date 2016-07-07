@@ -8,16 +8,19 @@ cc_opt="-g -O0"
 
 ngxpp_module="--add-module=${src_path}/ngxpp"
 
-http_modules="--add-module=${src_path}/http/test     \
-              --add-module=${src_path}/http/echo     \
-              --add-module=${src_path}/http/datahook \
-              --add-module=${src_path}/http/filter   \
-              --add-module=${src_path}/http/upstream \
-              --add-module=${src_path}/http/loadbalance \
-              --add-module=${src_path}/http/subrequest \
-              --add-module=${src_path}/http/shmem    \
-              --add-module=${src_path}/http/variables
-             "
+modules="test echo datahook filter \
+         upstream loadbalance \
+         subrequest \
+         shmem variables \
+         "
+
+http_modules=""
+
+for m in $modules
+do
+    http_modules="${http_modules} --add-module=${src_path}/http/${m} "
+done
+
 opts="${ngxpp_module}     \
       ${http_modules}
       "
