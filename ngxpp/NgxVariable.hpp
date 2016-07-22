@@ -58,29 +58,53 @@ public:
     }
 };
 
+inline namespace ngx_variable_types {
+#ifdef ngx_http_variable
+
+typedef ngx_http_request_t          ngx_variable_ctx_t;
+typedef ngx_http_variable_t         ngx_variable_t;
+typedef ngx_http_set_variable_pt    ngx_set_variable_pt;
+typedef ngx_http_get_variable_pt    ngx_get_variable_pt;
+
+static auto ngx_add_variable = &ngx_http_add_variable;
+static auto ngx_get_variable = &ngx_http_get_variable;
+
+#else   //ngx_stream_variable
+
+typedef ngx_stream_session_t        ngx_variable_ctx_t;
+typedef ngx_stream_variable_t       ngx_variable_t;
+typedef ngx_stream_set_variable_pt  ngx_set_variable_pt;
+typedef ngx_stream_get_variable_pt  ngx_get_variable_pt;
+
+static auto ngx_add_variable = &ngx_stream_add_variable;
+static auto ngx_get_variable = &ngx_stream_get_variable;
+
+#endif
+}
+
 // step 1: var = ngx_http_add_variable(cf, name, flags);
 // step 2: var.handler(func);
-class NgxVariable final : public NgxWrapper<ngx_http_variable_t>
+class NgxVariable final : public NgxWrapper<ngx_variable_t>
 {
 public:
-    typedef NgxWrapper<ngx_http_variable_t> super_type;
+    typedef NgxWrapper<ngx_variable_t> super_type;
     typedef NgxVariable this_type;
 public:
-    NgxVariable(ngx_http_variable_t* v):
+    NgxVariable(ngx_variable_t* v):
         super_type(v)
     {}
 
     ~NgxVariable() = default;
 public:
     template<typename T>    // T= uintptr_t
-    void handler(ngx_http_set_variable_pt p, T data = nullptr) const
+    void handler(ngx_set_variable_pt p, T data = nullptr) const
     {
         get()->set_handler = p;
         get()->data = reinterpret_cast<uintptr_t>(data);
     }
 
     template<typename T>    // T= uintptr_t
-    void handler(ngx_http_get_variable_pt p, T data = nullptr) const
+    void handler(ngx_get_variable_pt p, T data = nullptr) const
     {
         get()->get_handler = p;
         get()->data = reinterpret_cast<uintptr_t>(data);
@@ -88,7 +112,7 @@ public:
 
 };
 
-template<ngx_http_variable_t*(*get_vars)() = nullptr>
+template<ngx_variable_t*(*get_vars)() = nullptr>
 class NgxVariables final
 {
 public:
@@ -104,7 +128,7 @@ public:
 
         for (auto v = get_vars(); v->name.len; ++v)
         {
-            var_type var = ngx_http_add_variable(cf, &v->name, v->flags);
+            var_type var = ngx_add_variable(cf, &v->name, v->flags);
 
             NgxException::fail(!var);
 
@@ -116,7 +140,7 @@ public:
 public:
     static var_type create(ngx_conf_t *cf, ngx_str_t& name, ngx_uint_t flags = 0)
     {
-        auto p = ngx_http_add_variable(cf, &name, flags);
+        auto p = ngx_add_variable(cf, &name, flags);
 
         NgxException::require(p);
 
@@ -132,7 +156,7 @@ public:
     typedef NgxVariableValueProxy this_type;
     typedef boost::string_ref string_ref_type;
 public:
-    NgxVariableValueProxy(ngx_variable_value_t* v, ngx_http_request_t* r):
+    NgxVariableValueProxy(ngx_variable_value_t* v, ngx_variable_ctx_t* r):
         m_v(v), m_pool(r)
     {}
     ~NgxVariableValueProxy() = default;
@@ -186,7 +210,7 @@ public:
     typedef NgxVarManager this_type;
     typedef boost::string_ref string_ref_type;
 public:
-    NgxVarManager(ngx_http_request_t* r): m_r(r)
+    NgxVarManager(ngx_variable_ctx_t* r): m_r(r)
     {}
     ~NgxVarManager() = default;
 public:
@@ -220,14 +244,14 @@ public:
         return NgxVariableValueProxy(v, m_r);
     }
 private:
-    ngx_http_request_t* m_r = nullptr;
+    ngx_variable_ctx_t* m_r = nullptr;
 private:
-    ngx_http_variable_value_t* var(string_ref_type name) const
+    ngx_variable_value_t* var(string_ref_type name) const
     {
         auto s = NgxPool(m_r).dup(name);
         auto key = ngx_hash_strlow(s.data, s.data, s.len);
 
-        return ngx_http_get_variable(m_r, &s, key);
+        return ngx_get_variable(m_r, &s, key);
     }
 };
 
