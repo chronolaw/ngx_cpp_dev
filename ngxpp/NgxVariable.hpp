@@ -23,17 +23,17 @@ public:
 public:
     void set(ngx_str_t& str)
     {
-        get()->len = str.len;
-        get()->data = str.data;
-
-        get()->valid = true;
-        get()->not_found = false;
-        get()->no_cacheable = false;
+        set(&str);
     }
 
     void set(ngx_str_t* str)
     {
-        set(*str);
+        get()->len = str->len;
+        get()->data = str->data;
+
+        get()->valid = true;
+        get()->not_found = false;
+        get()->no_cacheable = false;
     }
 
     void clear()
