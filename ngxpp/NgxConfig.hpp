@@ -5,15 +5,19 @@
 
 #include "NgxArray.hpp"
 
-#ifndef NGX_CPP_DEV_CMD_OFFSET
+// http conf
+#ifdef NGX_HTTP_LOC_CONF_OFFSET
 #define NGX_CPP_DEV_CMD_OFFSET NGX_HTTP_LOC_CONF_OFFSET
 #endif
 
-#ifndef NGX_CPP_DEV_CMD_TYPE
-#define NGX_CPP_DEV_CMD_TYPE NGX_HTTP_LOC_CONF
+// stream conf
+#ifdef NGX_STREAM_SRV_CONF
+#define NGX_CPP_DEV_CMD_OFFSET NGX_STREAM_SRV_CONF
 #endif
 
-// deprecated in future
+#if __cplusplus >= 201402L
+[[deprecated]] // deprecated in future
+#endif
 class NgxCommand final
 {
 private:
@@ -48,7 +52,7 @@ public:
         return m_type;
     }
 private:
-    ngx_uint_t m_type = NGX_CPP_DEV_CMD_TYPE;
+    ngx_uint_t m_type;
 private:
     static ngx_uint_t take(int m, int n)
     {
