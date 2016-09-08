@@ -58,15 +58,17 @@ C++ APIs
 
 common tools
 ------
-* NgxUnsetValue   : generic unset value -1.
-* NgxValue        : wrapper for nginx int, include init/merge/unset.
-* NgxException    : wrapper for nginx error code.
-* NgxPool         : wrapper for nginx memory pool.
-* NgxAlloctor     : adapter to c++ allocator.
-* NgxString       : wrapper for nginx ngx_str_t.
-* NgxClock        : wrapper for nginx time functions.
-* NgxDatetime     : wrapper for nginx date functions.
-* NgxLog          : wrapper for nginx error log.
+Class Name	| Description
+----------------|------------------------
+NgxUnsetValue   | generic unset value -1.
+NgxValue        | wrapper for nginx int, include init/merge/unset.
+NgxException    | wrapper for nginx error code.
+NgxPool         | wrapper for nginx memory pool.
+NgxAlloctor     | adapter to c++ allocator.
+NgxString       | wrapper for nginx ngx_str_t.
+NgxClock        | wrapper for nginx time functions.
+NgxDatetime     | wrapper for nginx date functions.
+NgxLog          | wrapper for nginx error log.
 
 data structure
 ------
