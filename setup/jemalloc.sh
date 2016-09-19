@@ -1,9 +1,11 @@
 #!/bin/sh
-wget https://github.com/jemalloc/jemalloc/archive/4.0.4.tar.gz -O jemalloc.tar.gz
+ver="4.2.1"
+
+wget https://github.com/jemalloc/jemalloc/archive/${ver}.tar.gz -O jemalloc.tar.gz
 
 tar xvfz jemalloc.tar.gz
 
-cd jemalloc-4.0.4
+cd jemalloc-${ver}
 
 # we must have installed autoconf
 
