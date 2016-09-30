@@ -3,7 +3,7 @@
 ngx_path=$HOME/nginx
 src_path=$HOME/ngx_cpp_dev
 
-build_date="build at `date '+%Y.%m.%d %H:%M'`"
+build_date="${USER} build at `date '+%Y.%m.%d %H:%M'`"
 cc_opt="-g -O0"
 
 ngxpp_module="--add-module=${src_path}/ngxpp"
