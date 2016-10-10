@@ -8,7 +8,7 @@
 +#LINK =	$LINK
 +
 +CXX = g++
-+CXXFLAGS = -g -O0 -std=c++0x -Wall
++CXXFLAGS = -g -O0 -std=c++11 -Wall
 +LINK = g++
 +
  
