@@ -43,6 +43,8 @@ public:
 
     key_type min_key() const
     {
+        assert(!empty());
+
         auto p = ngx_rbtree_min(get()->root, get()->sentinel);
 
         return p->key;
@@ -50,6 +52,8 @@ public:
 
     T& min() const
     {
+        assert(!empty());
+
         auto p = ngx_rbtree_min(get()->root, get()->sentinel);
 
         constexpr auto offset = (std::size_t)&(((T*)0)->*np);
