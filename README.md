@@ -81,6 +81,7 @@ NgxList         | wrapper for nginx ngx_list_t.
 NgxQueue        | wrapper for nginx ngx_queue_t.
 NgxBuf          | wrapper for nginx ngx_buf_t.
 NgxChain        | wrapper for nginx ngx_chain_t.
+NgxRbtree       | wrapper for nginx ngx_rbtree_t.
 
 modules
 ------
