@@ -4,7 +4,9 @@ ngx_cpp_dev
 
 Nginx cpp development kit, with the power of C++11 and Boost Library.
 
-See also [annotated_nginx](https://github.com/chronolaw/annotated_nginx) (注释nginx1.10.1，学习研究源码)
+See also :
+* [annotated_nginx](https://github.com/chronolaw/annotated_nginx) - 注释nginx1.10.1，学习研究源码
+* [stream-lua-nginx-module](https://github.com/chronolaw/stream-lua-nginx-module) - Work with latest nginx, log_by_lua, and more enhanced
 
 Table of Contents
 =================
