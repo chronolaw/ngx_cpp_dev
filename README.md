@@ -20,7 +20,7 @@ Status
 ====
 Experimental but worked well.
 
-Prepareing new release.
+Working in process for new Nginx ...
 
 See Also
 ====
