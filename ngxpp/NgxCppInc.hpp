@@ -1,7 +1,11 @@
-// Copyright (c) 2016
+// Copyright (c) 2016-2017
 // Author: Chrono Law
 #ifndef _NGX_CPPINC_HPP
 #define _NGX_CPPINC_HPP
+
+#if __cplusplus < 201103L
+    #error "ngx_cpp_module need C++11 implementation!"
+#endif
 
 #include <cassert>
 
