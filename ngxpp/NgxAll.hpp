@@ -1,31 +1,24 @@
-// Copyright (c) 2015-2016
+// Copyright (c) 2015-2017
 // Author: Chrono Law
 #ifndef _NGX_ALL_HPP
 #define _NGX_ALL_HPP
 
+// nginx headers
 #include "Nginx.hpp"
 
-#include "NgxWrapper.hpp"
+// cpp headers
+#include "NgxCppInc.hpp"
 
-#include "NgxValue.hpp"
-#include "NgxException.hpp"
-#include "NgxPool.hpp"
-#include "NgxAllocator.hpp"
-#include "NgxString.hpp"
-#include "NgxLog.hpp"
-#include "NgxClock.hpp"
-#include "NgxDatetime.hpp"
+// core classes in namespace ngx{}
+#include "NgxCore.hpp"
 
-#include "NgxArray.hpp"
-#include "NgxList.hpp"
-#include "NgxQueue.hpp"
-#include "NgxRbtree.hpp"
-#include "NgxBuf.hpp"
-#include "NgxChain.hpp"
-#include "NgxKeyValue.hpp"
-//#include "NgxFile.hpp"
+// namespace define
+#define NGX_HTTP_NAMESPACE_BEGIN    namespace ngx { namespace http {
+#define NGX_HTTP_NAMESPACE_END      }}
+#define USING_HTTP_NAMESPACE        using namespace ngx::http;
 
-#include "NgxConfig.hpp"
+// http classes
+NGX_HTTP_NAMESPACE_BEGIN
 
 #include "NgxModule.hpp"
 #include "NgxHttpModule.hpp"
@@ -36,17 +29,14 @@
 #include "NgxLoadBalance.hpp"
 #include "NgxSubRequest.hpp"
 
-#include "NgxDigest.hpp"
-#include "NgxTimer.hpp"
 #include "NgxVariable.hpp"
-#include "NgxScript.hpp"
+#include "NgxComplexValue.hpp"
 
-#include "NgxEvent.hpp"
-#include "NgxConnection.hpp"
-#include "NgxGlobal.hpp"
+#include "NgxFactory.hpp"
 
-#if (NGX_THREADS)
-#include "NgxThread.hpp"
-#endif  //NGX_THREADS
+NGX_HTTP_NAMESPACE_END
+
+// open namespace ngx::http
+USING_HTTP_NAMESPACE
 
 #endif  //_NGX_ALL_HPP
