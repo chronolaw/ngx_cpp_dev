@@ -1,50 +1,46 @@
-// Copyright (c) 2016
+// Copyright (c) 2016-2017
 // Author: Chrono Law
 #ifndef _NGX_STREAM_ALL_HPP
 #define _NGX_STREAM_ALL_HPP
 
+// nginx headers
 #include "NginxStream.hpp"
 
-#include "NgxWrapper.hpp"
+// cpp headers
+#include "NgxCppInc.hpp"
 
-#include "NgxValue.hpp"
-#include "NgxException.hpp"
-#include "NgxPool.hpp"
-#include "NgxAllocator.hpp"
-#include "NgxString.hpp"
-#include "NgxLog.hpp"
-#include "NgxClock.hpp"
-#include "NgxDatetime.hpp"
+// core classes in namespace ngx{}
+#include "NgxCore.hpp"
 
-#include "NgxArray.hpp"
-#include "NgxList.hpp"
-#include "NgxQueue.hpp"
-#include "NgxRbtree.hpp"
-#include "NgxBuf.hpp"
-#include "NgxChain.hpp"
-#include "NgxKeyValue.hpp"
-//#include "NgxFile.hpp"
+// namespace define
+#define NGX_STREAM_NAMESPACE_BEGIN      namespace ngx { namespace stream {
+#define NGX_STREAM_NAMESPACE_END        }}
+#define USING_STREAM_NAMESPACE          using namespace ngx::stream;
 
-#include "NgxConfig.hpp"
+// stream classes
+NGX_STREAM_NAMESPACE_BEGIN
 
+#include "NgxModule.hpp"
 #include "NgxStreamModule.hpp"
+
 #include "NgxStreamSession.hpp"
 
-#include "NgxDigest.hpp"
-#include "NgxTimer.hpp"
-
+// nginx 1.11.2 support stream variables
 #if (nginx_version >= 1011002)
 #include "NgxVariable.hpp"
-//#include "NgxScript.hpp"
+#include "NgxComplexValue.hpp"
 #endif
 
-#include "NgxEvent.hpp"
-#include "NgxConnection.hpp"
-#include "NgxGlobal.hpp"
+#if (nginx_version >= 1011005)
+#include "NgxStreamFilter.hpp"
+#endif //(nginx_version >= 1011005)
 
-#if (NGX_THREADS)
-#include "NgxThread.hpp"
-#endif  //NGX_THREADS
+//#include "NgxFactory.hpp"
+
+NGX_STREAM_NAMESPACE_END
+
+// open namespace ngx::stream
+USING_STREAM_NAMESPACE
 
 #endif  // _NGX_STREAM_ALL_HPP
 
