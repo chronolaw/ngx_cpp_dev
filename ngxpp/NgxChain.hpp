@@ -1,10 +1,10 @@
+// Copyright (c) 2015-2017
 // Author: Chrono Law
-// Copyright (c) 2015-2016
 #ifndef _NGX_CHAIN_HPP
 #define _NGX_CHAIN_HPP
 
-#include <boost/iterator/iterator_facade.hpp>
-#include <boost/core/explicit_operator_bool.hpp>
+//#include <boost/iterator/iterator_facade.hpp>
+//#include <boost/core/explicit_operator_bool.hpp>
 
 #include "NgxBuf.hpp"
 
@@ -13,6 +13,7 @@ class NgxChainNode final : public NgxWrapper<ngx_chain_t>
 public:
     typedef NgxWrapper<ngx_chain_t> super_type;
     typedef NgxChainNode this_type;
+    typedef NgxBuf buffer_type;
 public:
     NgxChainNode(const NgxPool& p):super_type(p.chain())
     {}
@@ -37,7 +38,7 @@ public:
         return link(nullptr);
     }
 public:
-    NgxBuf data() const
+    buffer_type data() const
     {
         return get()->buf;
     }
@@ -140,6 +141,11 @@ public:
         }
     }
 public:
+    bool empty() const
+    {
+        return !get();
+    }
+
     std::size_t size() const
     {
         std::size_t len = 0;
