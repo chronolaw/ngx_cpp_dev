@@ -1,4 +1,4 @@
-// Copyright (c) 2015
+// Copyright (c) 2015-2017
 // Author: Chrono Law
 #ifndef _NGX_ARRAY_HPP
 #define _NGX_ARRAY_HPP
@@ -110,6 +110,9 @@ private:
         return reinterpret_cast<T*>(get()->elts);
     }
 };
+
+typedef NgxArray<ngx_int_t> NgxIntArray;
+typedef NgxArray<ngx_uint_t> NgxUintArray;
 
 typedef NgxArray<ngx_str_t> NgxStrArray;
 typedef NgxArray<ngx_keyval_t> NgxKvArray;
