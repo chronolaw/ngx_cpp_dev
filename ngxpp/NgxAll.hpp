@@ -32,7 +32,7 @@ NGX_HTTP_NAMESPACE_BEGIN
 #include "NgxVariable.hpp"
 #include "NgxComplexValue.hpp"
 
-#include "NgxFactory.hpp"
+//#include "NgxFactory.hpp"
 
 NGX_HTTP_NAMESPACE_END
 
