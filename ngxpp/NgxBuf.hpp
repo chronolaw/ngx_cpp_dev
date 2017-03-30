@@ -1,5 +1,5 @@
+// Copyright (c) 2015-2017
 // Author: Chrono Law
-// Copyright (c) 2015-2016
 #ifndef _NGX_BUF_HPP
 #define _NGX_BUF_HPP
 
@@ -16,6 +16,9 @@ public:
     {}
 
     NgxBuf(ngx_buf_t* buf):super_type(buf)
+    {}
+
+    NgxBuf(ngx_buf_t& buf):super_type(buf)
     {}
 
     ~NgxBuf() = default;
