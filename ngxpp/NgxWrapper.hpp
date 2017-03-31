@@ -1,9 +1,9 @@
-// Copyright (c) 2015-2016
+// Copyright (c) 2015-2017
 // Author: Chrono Law
 #ifndef _NGX_WRAPPER_HPP
 #define _NGX_WRAPPER_HPP
 
-#include <boost/type_traits.hpp>
+//#include <boost/type_traits.hpp>
 
 //#include "Nginx.hpp"
 
@@ -12,7 +12,7 @@ template<typename T>
 class NgxWrapper
 {
 public:
-    typedef typename boost::remove_pointer<T>::type wrapped_type;
+    typedef typename ::boost::remove_pointer<T>::type wrapped_type;
 
     typedef wrapped_type* pointer_type;
     typedef wrapped_type& reference_type;
