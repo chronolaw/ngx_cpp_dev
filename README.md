@@ -18,7 +18,7 @@ Table of Contents
 
 Status
 ====
-Experimental but worked well.
+Experimental but works well.
 
 Working in process for new Nginx ...
 
