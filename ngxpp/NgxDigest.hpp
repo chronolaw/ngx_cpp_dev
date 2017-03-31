@@ -1,15 +1,15 @@
 // Author: Chrono Law
-// Copyright (c) 2015
+// Copyright (c) 2015-2017
 #ifndef _NGX_DIGEST_HPP
 #define _NGX_DIGEST_HPP
 
-extern "C" {
-#include <ngx_md5.h>
-#include <ngx_sha1.h>
-#include <ngx_murmurhash.h>
-}
+//extern "C" {
+//#include <ngx_md5.h>
+//#include <ngx_sha1.h>
+//#include <ngx_murmurhash.h>
+//}
 
-#include <boost/utility/string_ref.hpp>
+//#include <boost/utility/string_ref.hpp>
 //#include "Nginx.hpp"
 
 struct NgxMd5Meta
