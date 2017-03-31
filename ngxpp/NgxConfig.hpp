@@ -1,43 +1,33 @@
-// Copyright (c) 2015
+// Copyright (c) 2015-2017
 // Author: Chrono Law
 #ifndef _NGX_CONFIG_HPP
 #define _NGX_CONFIG_HPP
 
 #include "NgxArray.hpp"
 
-// http conf
-#ifdef NGX_HTTP_LOC_CONF_OFFSET
-#define NGX_CPP_DEV_CMD_OFFSET NGX_HTTP_LOC_CONF_OFFSET
-#endif
-
-// stream conf
-#ifdef NGX_STREAM_SRV_CONF
-#define NGX_CPP_DEV_CMD_OFFSET NGX_STREAM_SRV_CONF
-#endif
-
-#if __cplusplus >= 201402L
-[[deprecated]] // deprecated in future
-#endif
-class NgxCommand final
-{
-private:
-    ngx_command_t m_cmd = ngx_null_command;
-public:
-    template<typename T>
-    NgxCommand(const ngx_str_t& n, ngx_uint_t t, T set,
-            ngx_uint_t c = NGX_CPP_DEV_CMD_OFFSET,
-            ngx_uint_t off = 0, void* p = nullptr):
-        m_cmd{n, t, set, c, off, p}     //do not use () to initilize
-    {}
-
-    NgxCommand() = default;
-    ~NgxCommand() = default;
-public:
-    operator const ngx_command_t& () const
-    {
-        return m_cmd;
-    }
-};
+// #if __cplusplus >= 201402L
+// [[deprecated]] // deprecated in future
+// #endif
+// class NgxCommand final
+// {
+// private:
+//     ngx_command_t m_cmd = ngx_null_command;
+// public:
+//     template<typename T>
+//     NgxCommand(const ngx_str_t& n, ngx_uint_t t, T set,
+//             ngx_uint_t c = NGX_CPP_DEV_CMD_OFFSET,
+//             ngx_uint_t off = 0, void* p = nullptr):
+//         m_cmd{n, t, set, c, off, p}     //do not use () to initilize
+//     {}
+//
+//     NgxCommand() = default;
+//     ~NgxCommand() = default;
+// public:
+//     operator const ngx_command_t& () const
+//     {
+//         return m_cmd;
+//     }
+// };
 
 class NgxTake final
 {
