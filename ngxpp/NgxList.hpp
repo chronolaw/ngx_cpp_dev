@@ -1,10 +1,10 @@
-// Copyright (c) 2015
+// Copyright (c) 2015-2017
 // Author: Chrono Law
 #ifndef _NGX_LIST_HPP
 #define _NGX_LIST_HPP
 
-#include <boost/iterator/iterator_facade.hpp>
-#include <boost/core/explicit_operator_bool.hpp>
+//#include <boost/iterator/iterator_facade.hpp>
+//#include <boost/core/explicit_operator_bool.hpp>
 
 #include "NgxPool.hpp"
 
@@ -170,8 +170,6 @@ public:
     iterator end() const
     {
         return iterator();
-        //static iterator e;
-        //return e;
     }
 public:
     template<typename V>
