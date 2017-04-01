@@ -1,12 +1,12 @@
-// Copyright (c) 2015-2016
+// Copyright (c) 2015-2017
 // Author: Chrono Law
 #ifndef _NGX_LOG_HPP
 #define _NGX_LOG_HPP
 
-#include <boost/mpl/logical.hpp>
-#include <boost/utility/enable_if.hpp>
-#include <boost/tti/has_member_data.hpp>
-#include <boost/tti/member_type.hpp>
+//#include <boost/mpl/logical.hpp>
+//#include <boost/utility/enable_if.hpp>
+//#include <boost/tti/has_member_data.hpp>
+//#include <boost/tti/member_type.hpp>
 
 #include "NgxWrapper.hpp"
 
