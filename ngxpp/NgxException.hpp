@@ -1,12 +1,12 @@
-// Copyright (c) 2015
+// Copyright (c) 2015-2017
 // Author: Chrono Law
 #ifndef _NGX_EXCEPT_HPP
 #define _NGX_EXCEPT_HPP
 
-#include <string>
-#include <exception>
-#include <boost/exception/all.hpp>
-#include <boost/utility/string_ref.hpp>
+//#include <string>
+//#include <exception>
+//#include <boost/exception/all.hpp>
+//#include <boost/utility/string_ref.hpp>
 
 //#include "Nginx.hpp"
 
