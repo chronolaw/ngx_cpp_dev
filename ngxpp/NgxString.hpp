@@ -1,13 +1,13 @@
-// Copyright (c) 2015
+// Copyright (c) 2015-2017
 // Author: Chrono Law
 #ifndef _NGX_STRING_HPP
 #define _NGX_STRING_HPP
 
-#include <string>
-#include <boost/next_prior.hpp>
-#include <boost/algorithm/string.hpp>
-#include <boost/utility/string_ref.hpp>
-#include <boost/iterator/iterator_traits.hpp>
+//#include <string>
+//#include <boost/next_prior.hpp>
+//#include <boost/algorithm/string.hpp>
+//#include <boost/utility/string_ref.hpp>
+//#include <boost/iterator/iterator_traits.hpp>
 
 #include "NgxWrapper.hpp"
 
