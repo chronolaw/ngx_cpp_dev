@@ -1,14 +1,14 @@
-// Copyright (c) 2015
+// Copyright (c) 2015-2017
 // Author: Chrono Law
 #ifndef _NGX_POOL_HPP
 #define _NGX_POOL_HPP
 
-#include <boost/type_traits.hpp>
-#include <boost/mpl/logical.hpp>
-#include <boost/tti/has_member_data.hpp>
-#include <boost/tti/member_type.hpp>
-#include <boost/utility/enable_if.hpp>
-#include <boost/utility/string_ref.hpp>
+//#include <boost/type_traits.hpp>
+//#include <boost/mpl/logical.hpp>
+//#include <boost/tti/has_member_data.hpp>
+//#include <boost/tti/member_type.hpp>
+//#include <boost/utility/enable_if.hpp>
+//#include <boost/utility/string_ref.hpp>
 
 #include "NgxException.hpp"
 #include "NgxWrapper.hpp"
