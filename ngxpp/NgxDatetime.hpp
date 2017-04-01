@@ -1,4 +1,4 @@
-// Copyright (c) 2015
+// Copyright (c) 2015-2017
 // Author: Chrono Law
 #ifndef _NGX_DATETIME_HPP
 #define _NGX_DATETIME_HPP
@@ -43,7 +43,7 @@ public:
 
     static std::time_t http(ngx_str_t& str)
     {
-        return ngx_http_parse_time(str.data, str.len);
+        return ngx_parse_http_time(str.data, str.len);
     }
 };
 
