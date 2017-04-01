@@ -1,11 +1,11 @@
-// Copyright (c) 2015
+// Copyright (c) 2015-2017
 // Author: Chrono Law
 #ifndef _NGX_QUEUE_HPP
 #define _NGX_QUEUE_HPP
 
-#include <boost/static_assert.hpp>
-#include <boost/iterator/iterator_facade.hpp>
-#include <boost/iterator/reverse_iterator.hpp>
+//#include <boost/static_assert.hpp>
+//#include <boost/iterator/iterator_facade.hpp>
+//#include <boost/iterator/reverse_iterator.hpp>
 
 #include "NgxWrapper.hpp"
 
@@ -19,6 +19,8 @@ class NgxQueueNode final : public NgxWrapper<ngx_queue_t>
 public:
     typedef NgxWrapper<ngx_queue_t> super_type;
     typedef NgxQueueNode this_type;
+
+    //typedef ngx_queue_t T::*queue_ptr_type;
 public:
     NgxQueueNode(ngx_queue_t* ptr): super_type(ptr)
     {}
@@ -82,6 +84,12 @@ public:
 public:
     NgxQueueIterator(const this_type&) = default;
     NgxQueueIterator& operator=(const this_type&) = default;
+//public:
+//    ngx_queue_t* get() const
+//    {
+//        return m_cur;
+//    }
+
 private:
     friend class boost::iterator_core_access;
 
@@ -121,6 +129,8 @@ public:
     typedef NgxWrapper<ngx_queue_t> super_type;
     typedef NgxQueueNode<T, q, offset> node_type;
     typedef NgxQueue this_type;
+
+    //typedef ngx_queue_t T::*queue_ptr_type;
 public:
     NgxQueue(ngx_queue_t& v): super_type(&v)
     {}
@@ -147,6 +157,8 @@ public:
     }
 
 public:
+    //typedef node_type value_type;
+    //typedef node_type& reference;
     typedef NgxQueueIterator<node_type> iterator;
     typedef boost::reverse_iterator<iterator> reverse_iterator;
 
