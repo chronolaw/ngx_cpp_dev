@@ -1,9 +1,9 @@
-// Copyright (c) 2015-2016
+// Copyright (c) 2015-2017
 // Author: Chrono Law
 #ifndef _NGX_GLOBAL_HPP
 #define _NGX_GLOBAL_HPP
 
-#include <boost/noncopyable.hpp>
+//#include <boost/noncopyable.hpp>
 
 //#include "Nginx.hpp"
 
