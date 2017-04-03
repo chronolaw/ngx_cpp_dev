@@ -1,9 +1,9 @@
-// Copyright (c) 2015-2016
+// Copyright (c) 2015-2017
 // Author: Chrono Law
 #ifndef _NGX_RBTREE_HPP
 #define _NGX_RBTREE_HPP
 
-#include <type_traits>
+//#include <type_traits>
 
 //#include "Nginx.hpp"
 #include "NgxWrapper.hpp"
@@ -81,6 +81,25 @@ public:
             "only ngx_str_node_t can find!");
 
         return ngx_str_rbtree_lookup(get(), val, hash);
+    }
+public:
+    template<typename F>
+    void traverse(F f) const
+    {
+        do_traverse(get()->root, f);
+    }
+private:
+    template<typename F>
+    void do_traverse(node_type* p, F f) const
+    {
+        if(p == get()->sentinel)
+        {
+            return;
+        }
+
+        do_traverse(p->left, f);
+        f(p);
+        do_traverse(p->right, f);
     }
 };
 
