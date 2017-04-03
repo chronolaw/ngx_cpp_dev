@@ -1,11 +1,11 @@
-// Copyright (c) 2015-2016
+// Copyright (c) 2015-2017
 // Author: Chrono Law
 #ifndef _NGX_TIMER_HPP
 #define _NGX_TIMER_HPP
 
-#include <deque>
-#include <boost/function.hpp>
-#include <boost/functional/factory.hpp>
+//#include <deque>
+//#include <boost/function.hpp>
+//#include <boost/functional/factory.hpp>
 
 #include "NgxValue.hpp"
 
