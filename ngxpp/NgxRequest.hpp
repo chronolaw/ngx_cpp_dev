@@ -1,4 +1,4 @@
-// Copyright (c) 2015
+// Copyright (c) 2015-2017
 // Author: Chrono Law
 #ifndef _NGX_HTTP_REQUEST_HPP
 #define _NGX_HTTP_REQUEST_HPP
