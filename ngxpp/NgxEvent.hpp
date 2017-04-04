@@ -1,4 +1,4 @@
-// Copyright (c) 2015
+// Copyright (c) 2015-2017
 // Author: Chrono Law
 #ifndef _NGX_EVENT_HPP
 #define _NGX_EVENT_HPP
@@ -56,7 +56,7 @@ public:
     {
         if(get()->timer_set)
         {
-            if(NgxValue::invalid(timer))
+            if(timer == ngx_nil)
             {
                 ngx_del_timer(get());
                 return;
