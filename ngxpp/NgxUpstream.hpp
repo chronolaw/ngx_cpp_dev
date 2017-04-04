@@ -1,4 +1,4 @@
-// Copyright (c) 2015
+// Copyright (c) 2015-2017
 // Author: Chrono Law
 #ifndef _NGX_HTTP_UPSTREAM_HPP
 #define _NGX_HTTP_UPSTREAM_HPP
@@ -64,6 +64,7 @@ public:
 
 template<
     ngx_int_t(*create_request)(ngx_http_request_t*) = nullptr,
+    ngx_int_t(*reinit_request)(ngx_http_request_t *r) = nullptr,
     ngx_int_t(*process_header)(ngx_http_request_t*) = nullptr,
     void(*finalize_request)(ngx_http_request_t*,ngx_int_t) = nullptr
 >
@@ -91,6 +92,7 @@ public:
         if(!upstream()->create_request)
         {
             upstream()->create_request = create_request;
+            upstream()->reinit_request = reinit_request;
             upstream()->process_header = process_header;
             upstream()->finalize_request = finalize_request;
         }
@@ -98,10 +100,10 @@ public:
         // check callback function
         assert(upstream()->create_request);
 
-        if(!upstream()->reinit_request)
-        {
-            upstream()->reinit_request = &this_type::default_reinit_request;
-        }
+        //if(!upstream()->reinit_request)
+        //{
+        //    upstream()->reinit_request = &this_type::default_reinit_request;
+        //}
 
         if(!upstream()->finalize_request)
         {
@@ -153,11 +155,11 @@ private:
     {
         NgxLogDebug(r).print("default_finalize_request");
     }
-    static ngx_int_t default_reinit_request(ngx_http_request_t* r)
-    {
-        NgxLogDebug(r).print("default_reinit_request");
-        return NGX_OK;
-    }
+    //static ngx_int_t default_reinit_request(ngx_http_request_t* r)
+    //{
+    //    NgxLogDebug(r).print("default_reinit_request");
+    //    return NGX_OK;
+    //}
 };
 
 #endif  //_NGX_HTTP_UPSTREAM_HPP
