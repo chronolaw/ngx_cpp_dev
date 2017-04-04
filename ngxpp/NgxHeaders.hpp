@@ -1,10 +1,10 @@
-// Copyright (c) 2015
+// Copyright (c) 2015-2017
 // Author: Chrono Law
 #ifndef _NGX_HEADERS_HPP
 #define _NGX_HEADERS_HPP
 
-#include <boost/utility/string_ref.hpp>
-#include <boost/algorithm/string.hpp>
+//#include <boost/utility/string_ref.hpp>
+//#include <boost/algorithm/string.hpp>
 
 #include "NgxList.hpp"
 #include "NgxString.hpp"
@@ -116,8 +116,7 @@ typedef NgxHeaders<
             ngx_http_headers_out_t, &ngx_http_request_t::headers_out>
         NgxHeadersOut;
 
-#if 0
-#include <iostream>
+//#include <iostream>
 
 class NgxHeadersChecker final
 {
@@ -130,13 +129,14 @@ public:
         // print headers
         auto v = [](ngx_table_elt_t& x)
         {
-            std::cout << x.key << "<=>"
-                << x.value << std::endl;
+            // atention! must use & to print ngx_str_t!
+            ngx_log_stderr(0, "%V<=>%V", &x.key, &x.value);
+
+            //std::cout << x.key << "<=>"<< x.value << std::endl;
         };
 
         h.list().visit(v);
     }
 };
-#endif
 
 #endif  //_NGX_HEADERS_HPP
