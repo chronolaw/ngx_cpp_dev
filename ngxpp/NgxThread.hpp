@@ -1,4 +1,4 @@
-// Copyright (c) 2015
+// Copyright (c) 2017
 // Author: Chrono Law
 #ifndef _NGX_THREAD_HPP
 #define _NGX_THREAD_HPP
@@ -10,18 +10,18 @@ template<typename T>
 class NgxThreadTask final : public NgxWrapper<ngx_thread_task_t>
 {
 public:
-    typedef NgxWrapper<ngx_thread_task_t> super_type;
-    typedef NgxThreadTask this_type;
-    typedef T task_ctx_type;
+    typedef NgxWrapper<ngx_thread_task_t>   super_type;
+    typedef NgxThreadTask                   this_type;
+    typedef T                               task_ctx_type;
 public:
     NgxThreadTask(ngx_thread_task_t* t) : super_type(t)
     {}
 
     ~NgxThreadTask() = default;
 public:
-    T& ctx() const
+    T* ctx() const
     {
-        return *reinterpret_cast<T*>(get()->ctx);
+        return reinterpret_cast<T*>(get()->ctx);
     }
 
     template<typename F>
@@ -49,10 +49,13 @@ public:
 class NgxThreadPool final : public NgxWrapper<ngx_thread_pool_t>
 {
 public:
-    typedef NgxWrapper<ngx_thread_pool_t> super_type;
-    typedef NgxThreadPool this_type;
+    typedef NgxWrapper<ngx_thread_pool_t>   super_type;
+    typedef NgxThreadPool                   this_type;
 public:
     NgxThreadPool(ngx_thread_pool_t* p) : super_type(p)
+    {}
+
+    NgxThreadPool(ngx_str_t name) : super_type(acquire(name))
     {}
 
     ~NgxThreadPool() = default;
