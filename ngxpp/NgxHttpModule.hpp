@@ -1,4 +1,4 @@
-// Copyright (c) 2015
+// Copyright (c) 2015-2017
 // Author: Chrono Law
 #ifndef _NGX_HTTP_MODULE_HPP
 #define _NGX_HTTP_MODULE_HPP
@@ -24,16 +24,16 @@ public:
 public:
     // content handler
     template<typename F>
-    void handler(ngx_conf_t* cf, F f) const
+    static void handler(ngx_conf_t* cf, F f)
     {
-        conf().loc(cf).handler = f;
+        instance().conf().loc(cf).handler = f;
     }
 
     // phase handler
     template<typename F>
-    void handler(ngx_conf_t* cf, F f, ngx_http_phases p) const
+    static void handler(ngx_conf_t* cf, F f, ngx_http_phases p)
     {
-        auto& c = conf().main(cf);
+        auto& c = instance().conf().main(cf);
 
         typedef NgxArray<ngx_http_handler_pt> handler_array_t;
 
@@ -73,9 +73,9 @@ public:
     }
 public:
     template<typename F>
-    void init(ngx_conf_t* cf, F f, ngx_uint_t flags = 0) const
+    static void init(ngx_conf_t* cf, F f, ngx_uint_t flags = 0)
     {
-        auto& uscf = conf().srv(cf);
+        auto& uscf = instance().conf().srv(cf);
 
         NgxException::fail(uscf.peer.init_upstream);
 
