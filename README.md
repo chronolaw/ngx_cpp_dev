@@ -20,7 +20,7 @@ Status
 ====
 Experimental but works well.
 
-Working in process for new Nginx ...
+Now support *Nginx 1.11.10*.
 
 See Also
 ====
@@ -33,6 +33,7 @@ Requirements
 * Linux or other UNIX like
 * C++11(gcc 4.6 or later)
 * Boost(1.57 or later)
+* Nginx 1.11.x or later
 
 Please see directiory "setup".
 
@@ -56,9 +57,13 @@ make
 ~~~~
 
 ngx_cpp_module is a pure header library, you should use ngx_cpp_module like this:
-~~~
-#include "NgxAll.hpp"	// include all c++ tools 
-~~~
+~~~~
+#include "NgxAll.hpp"	// include all c++ tools for http modules
+~~~~
+Or
+~~~~
+#include "NgxStreamAll.hpp"	// include all c++ tools for stream modules
+~~~~
 
 
 Examples
