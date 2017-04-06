@@ -17,16 +17,16 @@ public:
     {
         static ngx_command_t n[] =
         {
-            NgxCommand(
+            {
                 ngx_string("ndg_test"),
-                //NgxCmdString("ndg_test"),
                 NgxTake(NGX_HTTP_SRV_CONF|NGX_HTTP_LOC_CONF|NGX_CONF_FLAG, 1),
                 ngx_conf_set_flag_slot,
                 NGX_HTTP_LOC_CONF_OFFSET,
-                offsetof(conf_type, enabled)
-            ),
+                offsetof(conf_type, enabled),
+                0
+            },
 
-            NgxCommand()
+            ngx_null_command
         };
 
         return n;
