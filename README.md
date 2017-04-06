@@ -24,7 +24,7 @@ Now support *Nginx 1.11.10*.
 
 See Also
 ====
-* [annotated_nginx](https://github.com/chronolaw/annotated_nginx) - 注释nginx1.10.2，学习研究源码
+* [annotated_nginx](https://github.com/chronolaw/annotated_nginx) - 注释nginx1.10.3，学习研究源码
 * [stream-lua-nginx-module](https://github.com/chronolaw/stream-lua-nginx-module) - Work with nginx 1.11.4+, log_by_lua/filter_by_lua, and more enhanced
 * [openresty_dev](https://github.com/chronolaw/openresty_dev) - OpenResty/Lua Programming
 
@@ -107,7 +107,7 @@ Class Name      | Description
 ----------------|------------------------
 NgxModuleConfig | easy to access nginx module confing info.
 NgxModule       | get module's config and ctx data.
-NgxCommand      | wrapper for nginx ngx_command_t.
+NgxCommand      | abandoned, DO NOT USE IT.
 NgxTake         |
 NgxModuleCtx    | easy to access nginx module's ctx data.
 NgxHttpCoreModule|wrapper for ngx_http_core_module
@@ -137,7 +137,5 @@ NgxTimer        |
 TODO
 ====
 * more test suites
-* nginx stream
 * nginx datagram
-* c++ namespace
 * ...
