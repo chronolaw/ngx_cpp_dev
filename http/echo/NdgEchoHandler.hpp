@@ -1,4 +1,4 @@
-// Copyright (c) 2015
+// Copyright (c) 2015-2017
 // Author: Chrono Law
 #ifndef _NDG_ECHO_HANDLER_HPP
 #define _NDG_ECHO_HANDLER_HPP
@@ -11,6 +11,7 @@ class NdgEchoHandler final
 {
 public:
     typedef NdgEchoHandler this_type;
+    typedef NdgEchoModule  this_module;
 public:
     static ngx_int_t handler(ngx_http_request_t *r)
     {
@@ -26,7 +27,6 @@ private:
         using namespace std;
 
         NgxRequest req(r);
-        //NgxPool pool(r);
 
         if(!req.method(NGX_HTTP_GET))
         {
@@ -35,10 +35,16 @@ private:
 
         req.body().discard();
 
-        auto& cf = NdgEchoModule::instance().conf().loc(r);
-        NgxString msg = cf.msg;
-        cout << "msg = " << msg << endl;
+        auto& cf = this_module::conf().loc(r);
+#ifdef ENABLE_SCRIPT
+        auto str = cf.var.str(r);
+        NgxString msg = str;
 
+        // warning. do not use like this
+        //NgxString msg = cf.var.str(r);
+#else
+        NgxString msg = cf.msg;
+#endif
         // check args
         NgxString args = req->args;
 
@@ -47,7 +53,6 @@ private:
         {
             len += args.size()+1;
         }
-        //cout << "len = "<< len << endl;
 
         NgxResponse resp(r);
 
@@ -55,14 +60,7 @@ private:
 
         resp.length(len);
         resp.status(NGX_HTTP_OK);
-        //h->content_length_n = len;
-        //h->status = NGX_HTTP_OK;
-        //h->content_length_n = msg.size();
-        //h->status = NGX_HTTP_OK;
 
-        //NgxBuf buf = pool.buffer();
-        //buf.range(msg);
-        //resp.send(buf);
         if(!args.empty())
         {
             resp.send(args);
@@ -70,21 +68,8 @@ private:
         }
 
         resp.send(msg);
-        cout << "send buf" << endl;
-        //buf.finish();
-
-        //buf->memory= true;
-        //buf->last_buf = true;
-        //cout << buf.range() << endl;
-
-        //NgxChainNode ch = pool.chain();
-        //ch.set(buf);
-        //ch.finish();
-        //assert(!ch->next);
-        //assert(ch->buf == buf.get());
-
         resp.flush();
-        cout << "flush" << endl;
+
         return resp.eof();
     }
     catch(const NgxException& e)
@@ -104,12 +89,14 @@ private:
         cout << r->exten<< endl;
         cout << r->unparsed_uri<< endl;
 
+        //NgxBuf b(r->header_in);
+        //cout << b.boundary().len << endl;
         NgxVarManager var(r);
         cout << "var:";
         //cout << var.get("request_method")<< endl;
         cout << var["request_method"]<< endl;
         cout << var["var1"]<< endl;
-        assert(!var.get("abc").len);
+        assert(!var["abc"].get().len);
 
         //var.set("var1", "1234567");
         var["var1"] = "1234567";

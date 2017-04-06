@@ -1,4 +1,4 @@
-// Copyright (c) 2015
+// Copyright (c) 2015-2017
 // Author: Chrono Law
 #ifndef _NDG_ECHO_INIT_HPP
 #define _NDG_ECHO_INIT_HPP
@@ -17,15 +17,16 @@ public:
     {
         static ngx_command_t n[] =
         {
-            NgxCommand(
+            {
                 ngx_string("ndg_echo"),
                 NgxTake(NGX_HTTP_LOC_CONF, 1),
                 &this_type::set_echo,
                 NGX_HTTP_LOC_CONF_OFFSET,
-                offsetof(conf_type, msg)
-            ),
+                offsetof(conf_type, msg),
+                nullptr
+            },
 
-            NgxCommand()
+            ngx_null_command
         };
 
         return n;
@@ -62,14 +63,21 @@ public:
 private:
     static char* set_echo(ngx_conf_t* cf, ngx_command_t* cmd, void* conf)
     {
+#ifdef ENABLE_SCRIPT
+        NgxStrArray args(cf->args);
+        auto& lcf = conf_type::cast(conf);
+
+        lcf.var.init(cf, args[1]);
+#else
         auto rc = ngx_conf_set_str_slot(cf, cmd, conf);
 
         if(rc != NGX_CONF_OK)
         {
             return rc;
         }
+#endif
 
-        NgxHttpCoreModule::instance().handler(
+        NgxHttpCoreModule::handler(
                         cf, &handler_type::handler);
 
         return NGX_CONF_OK;
