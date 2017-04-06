@@ -30,9 +30,23 @@ public:
         return get()->connection;
     }
 public:
-    void close() const
+#if nginx_version >= 1011005
+    void send( ngx_chain_t *chain, ngx_uint_t from_upstream = true) const
     {
+        auto rc = ngx_stream_top_filter(get(), chain, from_upstream);
+
+        NgxException::fail(rc == NGX_ERROR);
+    }
+#endif
+
+    void close(ngx_uint_t rc = NGX_STREAM_OK) const
+    {
+#if nginx_version >= 1011004
+        ngx_stream_finalize_session(get(), rc);
+#else
+        boost::ignore_unused(rc);
         ngx_stream_close_connection(connection());
+#endif
     }
 };
 
