@@ -2,6 +2,16 @@
 
 ngx_addon_name=ndg_shmem_module
 
-HTTP_MODULES="$HTTP_MODULES ndg_shmem_module"
-NGX_ADDON_SRCS="$NGX_ADDON_SRCS $ngx_addon_dir/ModNdgShmem.cpp"
-CORE_LIBS="$CORE_LIBS -lrt"
+if test -n "$ngx_module_link"; then
+    ngx_module_type=HTTP
+    ngx_module_name=ndg_shmem_module
+    ngx_module_srcs="$ngx_addon_dir/ModNdgShmem.cpp"
+    ngx_module_libs="-lrt"
+
+    . auto/module
+else
+    HTTP_MODULES="$HTTP_MODULES ndg_shmem_module"
+    NGX_ADDON_SRCS="$NGX_ADDON_SRCS $ngx_addon_dir/ModNdgShmem.cpp"
+    CORE_LIBS="$CORE_LIBS -lrt"
+fi
+

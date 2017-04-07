@@ -20,7 +20,7 @@ public:
 public:
     static ngx_int_t init(ngx_conf_t* cf)
     {
-        NgxHttpCoreModule::instance().handler(
+        NgxHttpCoreModule::handler(
             cf, &this_type::handler, NGX_HTTP_LOG_PHASE);
 
         return NGX_OK;
@@ -35,7 +35,7 @@ public:
     static ngx_int_t handler(ngx_http_request_t *r)
     try
     {
-        static auto& cf = this_module::instance().conf().main(r);
+        static auto& cf = this_module::conf().main(r);
 
         static shmem_type segment(
             boost::interprocess::open_or_create, "ndg_shmem",

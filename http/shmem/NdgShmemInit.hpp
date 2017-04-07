@@ -17,15 +17,16 @@ public:
     {
         static ngx_command_t n[] =
         {
-            NgxCommand(
+            {
                 ngx_string("ndg_shmem_size"),
                 NgxTake(NGX_HTTP_MAIN_CONF, 1),
                 ngx_conf_set_size_slot,
                 NGX_HTTP_MAIN_CONF_OFFSET,
-                offsetof(conf_type, size)
-            ),
+                offsetof(conf_type, size),
+                nullptr
+            },
 
-            NgxCommand()
+            ngx_null_command
         };
 
         return n;
