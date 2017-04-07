@@ -1,4 +1,4 @@
-// Copyright (c) 2015
+// Copyright (c) 2015-2017
 // Author: Chrono Law
 #ifndef _NDG_SHMEM_INIT_HPP
 #define _NDG_SHMEM_INIT_HPP
