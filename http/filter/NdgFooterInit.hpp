@@ -17,23 +17,25 @@ public:
     {
         static ngx_command_t n[] =
         {
-            NgxCommand(
+            {
                 ngx_string("ndg_header"),
                 NgxTake(NGX_HTTP_LOC_CONF, 2),
                 ngx_conf_set_keyval_slot,
                 NGX_HTTP_LOC_CONF_OFFSET,
-                offsetof(conf_type, headers)
-            ),
+                offsetof(conf_type, headers),
+                nullptr
+            },
 
-            NgxCommand(
+            {
                 ngx_string("ndg_footer"),
                 NgxTake(NGX_HTTP_LOC_CONF, 1),
                 ngx_conf_set_str_slot,
                 NGX_HTTP_LOC_CONF_OFFSET,
-                offsetof(conf_type, footer)
-            ),
+                offsetof(conf_type, footer),
+                nullptr
+            },
 
-            NgxCommand()
+            ngx_null_command
         };
 
         return n;

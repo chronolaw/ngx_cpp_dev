@@ -28,6 +28,6 @@ struct NdgFooterCtx final
     int flag = 0;
 };
 
-NGX_MOD_INSTANCE(NdgFooterModule, ndg_footer_module, NdgFooterConf)
+NGX_MOD_CTX_INSTANCE(NdgFooterModule, ndg_footer_module, NdgFooterCtx, NdgFooterConf)
 
 #endif  //_NDG_FOOTER_CONF_HPP

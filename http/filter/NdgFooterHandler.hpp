@@ -31,7 +31,7 @@ public:
 
     static void do_header_filter(ngx_http_request_t *r)
     {
-        auto& ctx = this_module::instance().data<NdgFooterCtx>(r);
+        auto& ctx = this_module::data(r);
         if(ctx.flag)
         {
             return;
@@ -40,7 +40,7 @@ public:
         ctx.flag = 1;
         NgxResponse resp(r);
 
-        auto& cf = this_module::instance().conf().loc(r);
+        auto& cf = this_module::conf().loc(r);
 
         NgxKvArray headers = cf.headers;
 
@@ -85,7 +85,7 @@ public:
 
     static void do_body_filter(ngx_http_request_t *r, ngx_chain_t *in)
     {
-        auto& cf = this_module::instance().conf().loc(r);
+        auto& cf = this_module::conf().loc(r);
 
         NgxString footer = cf.footer;
         if(footer.empty())
@@ -93,7 +93,7 @@ public:
             return;
         }
 
-        auto& ctx = this_module::instance().data<NdgFooterCtx>(r);
+        auto& ctx = this_module::data(r);
         if(ctx.flag != 1)
         {
             return;
