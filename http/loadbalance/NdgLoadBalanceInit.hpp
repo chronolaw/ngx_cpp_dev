@@ -1,4 +1,4 @@
-// Copyright (c) 2015
+// Copyright (c) 2015-2017
 // Author: Chrono Law
 #ifndef _NDG_LOAD_BALANCE_INIT_HPP
 #define _NDG_LOAD_BALANCE_INIT_HPP
@@ -16,13 +16,14 @@ public:
     {
         static ngx_command_t n[] =
         {
-            NgxCommand(
+            {
                 ngx_string("ndg_load_balance"),
                 NgxTake(NGX_HTTP_UPS_CONF, 0),
-                &this_type::set_load_balance
-            ),
+                &this_type::set_load_balance,
+                0,0,nullptr
+            },
 
-            NgxCommand()
+            ngx_null_command
         };
 
         return n;
@@ -57,7 +58,7 @@ public:
 private:
     static char* set_load_balance(ngx_conf_t* cf, ngx_command_t* cmd, void* conf)
     {
-        NgxHttpUpstreamModule::instance().init(cf, &handler_type::init);
+        NgxHttpUpstreamModule::init(cf, &handler_type::init);
 
         return NGX_CONF_OK;
     }

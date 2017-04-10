@@ -1,4 +1,4 @@
-// Copyright (c) 2015
+// Copyright (c) 2015-2017
 // Author: Chrono Law
 #ifndef _NDG_LOAD_BALANCE_HANDLER_HPP
 #define _NDG_LOAD_BALANCE_HANDLER_HPP
