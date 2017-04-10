@@ -1,4 +1,4 @@
-// Copyright (c) 2015
+// Copyright (c) 2015-2017
 // Author: Chrono Law
 #ifndef _NDG_UPSTREAM_INIT_HPP
 #define _NDG_UPSTREAM_INIT_HPP
@@ -17,13 +17,15 @@ public:
     {
         static ngx_command_t n[] =
         {
-            NgxCommand(
+            {
                 ngx_string("ndg_upstream_pass"),
                 NgxTake(NGX_HTTP_LOC_CONF, 1),
-                &this_type::set_upstream_pass
-            ),
+                &this_type::set_upstream_pass,
+                NGX_HTTP_LOC_CONF_OFFSET,
+                0, nullptr
+            },
 
-            NgxCommand()
+            ngx_null_command
         };
 
         return n;
@@ -62,7 +64,7 @@ private:
     {
         ngx_url_t u;
 
-        u.url = NgxStrArray(cf->args)[1];
+        u.url = NgxConfig::args(cf)[1];
         u.no_resolve = true;
 
         auto& lcf = *reinterpret_cast<conf_type*>(conf);
@@ -71,10 +73,10 @@ private:
 
         if(!lcf.upstream.upstream)
         {
-            return reinterpret_cast<char*>(NGX_CONF_ERROR);
+            return NGX_CONF_ERROR;
         }
 
-        NgxHttpCoreModule::instance().handler(
+        NgxHttpCoreModule::handler(
                         cf, &handler_type::handler);
 
         return NGX_CONF_OK;

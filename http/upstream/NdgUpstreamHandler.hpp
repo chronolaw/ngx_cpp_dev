@@ -1,4 +1,4 @@
-// Copyright (c) 2015
+// Copyright (c) 2015-2017
 // Author: Chrono Law
 #ifndef _NDG_UPSTREAM_HANDLER_HPP
 #define _NDG_UPSTREAM_HANDLER_HPP
@@ -13,45 +13,55 @@ public:
 public:
     static ngx_int_t create_request(ngx_http_request_t* r)
     {
-        ngx_str_t msgs[] = {
-            r->request_line,
-            ngx_string("\r\n"),
-            ngx_string("Host: localhost\r\n"),
-            ngx_string("\r\n"),
-            ngx_null_string
-        };
+        ngx_str_t msg = ngx_string("xxxx");
+
+        if(r->args.len >= 4)
+        {
+            msg = r->args;
+            msg.len = 4;
+        }
 
         NgxPool pool(r);
         NgxUpstream u(r);
 
-        NgxString s = msgs[0];
-        for(auto i = 0u;!s.empty();s = msgs[++i])
-        {
-            NgxBuf buf = pool.buffer();
-            buf.range(s);
+        NgxBuf buf = pool.buffer();
+        buf.range(msg);
 
-            NgxChainNode ch = pool.chain();
-            ch.set(buf);
+        NgxChainNode ch = pool.chain();
+        ch.set(buf);
 
-            log(r).print("proxy %V", s.get());
-            u.request(ch);
-        }
+        log(r).print("proxy %V", msg);
+        u.request(ch);
 
-        log(r).print("send:%V", &r->request_line);
+        log(r).print("send:%V", &r->args);
 
+        return NGX_OK;
+    }
+
+    static ngx_int_t reinit_request(ngx_http_request_t* r)
+    {
         return NGX_OK;
     }
 
     static ngx_int_t process_header(ngx_http_request_t* r)
     {
         NgxUpstream u(r);
+        NgxBuf buf = u.buffer();
+
+        if(buf.size() < 2)
+        {
+            return NGX_AGAIN;
+        }
+
+        auto p = buf->pos;
+
+        u.headers().content_length_n = (p[0] << 8) + p[1];
 
         u.headers().status_n = NGX_HTTP_OK;
-        u.headers().content_length_n = 192;
 
         u.state().status = NGX_HTTP_OK;
 
-        // do others ...
+        buf.consume(2);
 
         return NGX_OK;
     }
@@ -66,8 +76,10 @@ public:
     typedef NdgUpstreamCallback callback_type;
 
     typedef NdgUpstreamModule this_module;
-    typedef NgxUpstreamHelper<&callback_type::create_request,
-                     &callback_type::process_header>
+    typedef NgxUpstreamHelper<
+                    &callback_type::create_request,
+                    &callback_type::reinit_request,
+                    &callback_type::process_header>
             this_upstream;
 public:
     static ngx_int_t handler(ngx_http_request_t *r)
@@ -82,7 +94,7 @@ public:
         this_upstream u(r);
 
         // get config
-        auto& cf = this_module::instance().conf().loc(r);
+        auto& cf = this_module::conf().loc(r);
 
         // set upstream confg
         u.conf(cf.upstream);
