@@ -1,4 +1,4 @@
-// Copyright (c) 2015
+// Copyright (c) 2015-2017
 // Author: Chrono Law
 #ifndef _NDG_SUBREQUEST_INIT_HPP
 #define _NDG_SUBREQUEST_INIT_HPP
@@ -17,23 +17,25 @@ public:
     {
         static ngx_command_t n[] =
         {
-            NgxCommand(
+            {
                 ngx_string("ndg_subrequest_loc"),
                 NgxTake(NGX_HTTP_LOC_CONF, 1),
                 &this_type::set_subrequest_loc,
                 NGX_HTTP_LOC_CONF_OFFSET,
-                offsetof(conf_type, loc)
-            ),
+                offsetof(conf_type, loc),
+                nullptr
+            },
 
-            NgxCommand(
+            {
                 ngx_string("ndg_subrequest_args"),
                 NgxTake(NGX_HTTP_SRV_CONF|NGX_HTTP_LOC_CONF, 1),
                 ngx_conf_set_str_slot,
                 NGX_HTTP_LOC_CONF_OFFSET,
-                offsetof(conf_type, args)
-            ),
+                offsetof(conf_type, args),
+                nullptr
+            },
 
-            NgxCommand()
+            ngx_null_command
         };
 
         return n;
@@ -72,7 +74,7 @@ private:
     {
         ngx_conf_set_str_slot(cf, cmd, conf);
 
-        NgxHttpCoreModule::instance().handler(
+        NgxHttpCoreModule::handler(
                         cf, &handler_type::handler);
 
         return NGX_CONF_OK;

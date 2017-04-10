@@ -1,4 +1,4 @@
-// Copyright (c) 2015
+// Copyright (c) 2015-2017
 // Author: Chrono Law
 #ifndef _NDG_SUBREQUEST_HANDLER_HPP
 #define _NDG_SUBREQUEST_HANDLER_HPP
@@ -93,7 +93,7 @@ public:
         }
 
         // get config
-        auto& cf = this_module::instance().conf().loc(r);
+        auto& cf = this_module::conf().loc(r);
 
         this_subrequest(r).create(cf.loc, cf.args);
 
