@@ -1,4 +1,4 @@
-// Copyright (c) 2016
+// Copyright (c) 2016-2017
 // Author: Chrono Law
 #ifndef _CPP_EPOLL_CONF_HPP
 #define _CPP_EPOLL_CONF_HPP
@@ -13,7 +13,7 @@ public:
     CppEpollConf() = default;
     ~CppEpollConf() = default;
 public:
-    ngx_uint_t  events = NgxUnsetValue::get();
+    ngx_uint_t  events = ngx_nil;
 public:
     static void* create(ngx_cycle_t* cycle)
     {
@@ -24,14 +24,19 @@ public:
     {
         boost::ignore_unused(cycle);
 
-        auto conf = reinterpret_cast<this_type*>(c);
+        auto conf = this_type::cast(c);
 
         NgxValue::init(conf->events, 512);      //default list size = 512
 
         return NGX_CONF_OK;
     }
+public:
+    static this_type* cast(void* c)
+    {
+        return reinterpret_cast<this_type*>(c);
+    }
 };
 
-NGX_MOD_INSTANCE(CppEpollModule, cpp_epoll_module)
+//NGX_MOD_INSTANCE(CppEpollModule, cpp_epoll_module)
 
 #endif  //_CPP_EPOLL_CONF_HPP

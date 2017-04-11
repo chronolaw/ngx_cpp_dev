@@ -1,7 +1,14 @@
-// Copyright (c) 2015
+// Copyright (c) 2015-2017
 // Author: Chrono Law
 #ifndef _CPP_EPOLL_HANDLER_HPP
 #define _CPP_EPOLL_HANDLER_HPP
+
+// fix nginx's small bug
+#ifdef ngx_event_get_conf
+#undef ngx_event_get_conf
+#define ngx_event_get_conf(conf_ctx, module)                                  \
+             (*(ngx_get_conf(conf_ctx, ngx_events_module))) [module.ctx_index]
+#endif
 
 #include <vector>
 
@@ -13,7 +20,7 @@ public:
     typedef CppEpollHandler this_type;
     typedef CppEpollConf    conf_type;
 
-    typedef CppEpollModule  this_module;
+    //typedef CppEpollModule  this_module;
 
     typedef NgxLog<NGX_LOG_EMERG> NgxLogEmerg;
     typedef NgxLog<NGX_LOG_ALERT> NgxLogAlert;
@@ -99,6 +106,12 @@ public:
         {
             op = EPOLL_CTL_ADD;
         }
+
+#if (NGX_HAVE_EPOLLEXCLUSIVE && NGX_HAVE_EPOLLRDHUP)
+        if (flags & NGX_EXCLUSIVE_EVENT) {
+            events &= ~EPOLLRDHUP;
+        }
+#endif
 
         epoll_event ee;
 
@@ -315,7 +328,7 @@ private:
 
             rev = c->read;
 
-            if(NgxValue::invalid(c->fd) || rev->instance != instance)
+            if(c->fd == ngx_nil || rev->instance != instance)
             {
                 continue; // conn stale
             }
@@ -337,10 +350,14 @@ private:
 
             if((revents &EPOLLIN) && rev->active)       // read or accept events
             {
+//#if (NGX_HAVE_EPOLLRDHUP)
                 if(revents & EPOLLRDHUP)                // client close socket
                 {
                     rev->pending_eof = true;            // int ngx_http_request.c???
                 }
+
+                rev->available = true;                  // nginx 1.11.x
+//#endif
 
                 rev->ready = true;                      //can read
 
@@ -362,7 +379,7 @@ private:
 
             if((revents & EPOLLOUT) && wev->active)     //can write
             {
-                if(NgxValue::invalid(c->fd) || wev->instance != instance)
+                if(c->fd == ngx_nil || wev->instance != instance)
                 {
                     continue; // conn stale
                 }
@@ -385,9 +402,12 @@ private:
 private:
     static conf_type& conf(ngx_cycle_t* cycle)
     {
-        auto conf_ptr = ngx_get_conf(cycle->conf_ctx, ngx_events_module);
+        //auto conf_ptr = ngx_get_conf(cycle->conf_ctx, ngx_events_module);
+        //return this_module::instance().conf().get<conf_type>(*conf_ptr);
+        extern ngx_module_t cpp_epoll_module;
 
-        return this_module::instance().conf().get<conf_type>(*conf_ptr);
+        return *conf_type::cast(
+                    ngx_event_get_conf(cycle->conf_ctx, cpp_epoll_module));
     }
 private:
     static void init_global_vars()
@@ -425,11 +445,11 @@ private:
         auto& ep_data = epoll_data();
 
         // init epoll
-        if(NgxValue::invalid(ep_data.ep))
+        if(ep_data.ep == ngx_nil)
         {
             ep_data.ep = ::epoll_create(cycle->connection_n / 2);
 
-            if(NgxValue::invalid(ep_data.ep))
+            if(ep_data.ep == ngx_nil)
             {
                 NgxLogEmerg(cycle).print(
                         ngx_errno, "epoll_create() failed");
@@ -475,7 +495,7 @@ private:
         auto& ep_data = epoll_data();
 
         ::close(ep_data.ep);
-        ep_data.ep = NgxUnsetValue::get();
+        ep_data.ep = ngx_nil;
 
         ep_data.event_list.clear();
         //ngx_free(ep_data.event_list);
@@ -486,7 +506,7 @@ private:
 private:
     struct notify_data_t final
     {
-        int              fd = -1;
+        int              fd = ngx_nil;
         ngx_event_t      event;
         ngx_connection_t conn;
     };
@@ -504,7 +524,7 @@ private:
 
         notify.fd = ::eventfd(0, 0);
 
-        if(NgxValue::invalid(notify.fd))
+        if(notify.fd == ngx_nil)
         {
             NgxLogEmerg(cycle).print(ngx_errno, "eventfd() failed");
 
@@ -563,7 +583,7 @@ private:
         auto& notify = notify_data();
 
         ::close(notify.fd);
-        notify.fd = NgxUnsetValue::get();
+        notify.fd = ngx_nil;
     }
 };
 

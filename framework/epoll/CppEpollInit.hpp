@@ -1,4 +1,4 @@
-// Copyright (c) 2015
+// Copyright (c) 2015-2017
 // Author: Chrono Law
 #ifndef _CPP_EPOLL_INIT_HPP
 #define _CPP_EPOLL_INIT_HPP
@@ -17,15 +17,16 @@ public:
     {
         static ngx_command_t n[] =
         {
-            NgxCommand(
+            {
                 ngx_string("cpp_epoll_events"),
                 NgxTake(NGX_EVENT_CONF, 1),
                 ngx_conf_set_num_slot,
                 0,
-                offsetof(conf_type, events)
-            ),
+                offsetof(conf_type, events),
+                nullptr
+            },
 
-            NgxCommand()
+            ngx_null_command
         };
 
         return n;
