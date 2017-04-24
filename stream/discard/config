@@ -1,0 +1,10 @@
+#./configure --add-module=$HOME/ngx_cpp_dev/modules/test
+
+ngx_module_type=STREAM
+ngx_module_name=ndg_stream_discard_module
+ngx_module_srcs="$ngx_addon_dir/ModNdgStreamDiscard.cpp"
+
+. auto/module
+
+ngx_addon_name=ndg_stream_discard_module
+
