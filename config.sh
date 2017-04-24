@@ -21,8 +21,18 @@ do
     http_modules="${http_modules} --add-module=${src_path}/http/${m} "
 done
 
+modules="epoll"
+
+event_modules=""
+
+for m in $modules
+do
+    event_modules="${event_modules} --add-module=${src_path}/event/${m} "
+done
+
 opts="${ngxpp_module}     \
-      ${http_modules}
+      ${http_modules}     \
+      ${event_modules}
       "
 cd $ngx_path
 
