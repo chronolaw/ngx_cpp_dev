@@ -58,11 +58,11 @@ make
 
 ngx_cpp_module is a pure header library, you should use ngx_cpp_module like this:
 ~~~~
-#include "NgxAll.hpp"	// include all c++ tools for http modules
+#include "NgxAll.hpp"	// include all C++ tools for http modules
 ~~~~
 Or
 ~~~~
-#include "NgxStreamAll.hpp"	// include all c++ tools for stream modules
+#include "NgxStreamAll.hpp"	// include all C++ tools for stream modules
 ~~~~
 
 
@@ -82,7 +82,7 @@ NgxUnsetValue   | generic unset value -1.
 NgxValue        | wrapper for nginx int, include init/merge/unset.
 NgxException    | wrapper for nginx error code.
 NgxPool         | wrapper for nginx memory pool.
-NgxAlloctor     | adapter to c++ allocator.
+NgxAlloctor     | adapter to C++ allocator.
 NgxString       | wrapper for nginx ngx_str_t.
 NgxClock        | wrapper for nginx time functions.
 NgxDatetime     | wrapper for nginx date functions.
