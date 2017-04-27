@@ -103,19 +103,19 @@ public:
         return o;
     }
 
-    template<typename T>
-    friend T& operator<<(T& o, const ngx_str_t& s)
-    {
-        o.write(reinterpret_cast<const char*>(s.data), s.len);
-        return o;
-    }
+    //template<typename T>
+    //friend T& operator<<(T& o, const ngx_str_t& s)
+    //{
+    //    o.write(reinterpret_cast<const char*>(s.data), s.len);
+    //    return o;
+    //}
 
-    template<typename T>
-    friend T& operator<<(T& o, const volatile ngx_str_t& s)
-    {
-        o.write(reinterpret_cast<const char*>(s.data), s.len);
-        return o;
-    }
+    //template<typename T>
+    //friend T& operator<<(T& o, const volatile ngx_str_t& s)
+    //{
+    //    o.write(reinterpret_cast<const char*>(s.data), s.len);
+    //    return o;
+    //}
 
     friend bool operator==(const this_type& l, const this_type& r)
     {
@@ -132,5 +132,23 @@ public:
     }
 };
 
+// workaround for some compilers
+inline namespace ostream_for_ngx_str_t{
+
+template<typename T>
+T& operator<<(T& o, const ngx_str_t& s)
+{
+    o.write(reinterpret_cast<const char*>(s.data), s.len);
+    return o;
+}
+
+template<typename T>
+T& operator<<(T& o, const volatile ngx_str_t& s)
+{
+    o.write(reinterpret_cast<const char*>(s.data), s.len);
+    return o;
+}
+
+}
 
 #endif //_NGX_STRING_HPP
