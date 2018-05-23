@@ -24,7 +24,7 @@ Now support *Nginx 1.11.10 or later*.
 
 See Also
 ====
-* [annotated_nginx](https://github.com/chronolaw/annotated_nginx) - 注释nginx1.12.0，学习研究源码
+* [annotated_nginx](https://github.com/chronolaw/annotated_nginx) - 注释nginx，学习研究源码
 * [stream-lua-nginx-module](https://github.com/chronolaw/stream-lua-nginx-module) - Work with nginx 1.11.4+, log_by_lua/filter_by_lua, and more enhanced
 * [openresty_dev](https://github.com/chronolaw/openresty_dev) - OpenResty/Lua Programming
 
