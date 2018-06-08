@@ -25,7 +25,6 @@ Now support *Nginx 1.11.10 or later*.
 See Also
 ====
 * [annotated_nginx](https://github.com/chronolaw/annotated_nginx) - 注释nginx，学习研究源码
-* [stream-lua-nginx-module](https://github.com/chronolaw/stream-lua-nginx-module) - Work with nginx 1.11.4+, log_by_lua/filter_by_lua, and more enhanced
 * [openresty_dev](https://github.com/chronolaw/openresty_dev) - OpenResty/Lua Programming
 
 Requirements
@@ -39,7 +38,7 @@ Please see directiory "setup".
 
 Usage
 =====
-At first, you must patch nginx/auto/make to enable g++ compiler and C++11.
+At first, you must patch `nginx/auto/make` to enable g++ compiler and C++11.
 
 Please see directory *"patch/auto"*.
 
@@ -83,7 +82,7 @@ NgxValue        | wrapper for nginx int, include init/merge/unset.
 NgxException    | wrapper for nginx error code.
 NgxPool         | wrapper for nginx memory pool.
 NgxAlloctor     | adapter to C++ allocator.
-NgxString       | wrapper for nginx ngx_str_t.
+NgxString       | wrapper for nginx `ngx_str_t`.
 NgxClock        | wrapper for nginx time functions.
 NgxDatetime     | wrapper for nginx date functions.
 NgxLog          | wrapper for nginx error log.
@@ -93,12 +92,12 @@ data structure
 
 Class Name      | Description
 ----------------|------------------------
-NgxArray        | wrapper for nginx ngx_array_t.
-NgxList         | wrapper for nginx ngx_list_t.
-NgxQueue        | wrapper for nginx ngx_queue_t.
-NgxBuf          | wrapper for nginx ngx_buf_t.
-NgxChain        | wrapper for nginx ngx_chain_t.
-NgxRbtree       | wrapper for nginx ngx_rbtree_t.
+NgxArray        | wrapper for nginx `ngx_array_t`.
+NgxList         | wrapper for nginx `ngx_list_t.`
+NgxQueue        | wrapper for nginx `ngx_queue_t`.
+NgxBuf          | wrapper for nginx `ngx_buf_t`.
+NgxChain        | wrapper for nginx `ngx_chain_t`.
+NgxRbtree       | wrapper for nginx `ngx_rbtree_t`.
 
 modules
 ------
