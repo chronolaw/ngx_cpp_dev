@@ -27,9 +27,10 @@ install:
 
 script:
   - cd nginx-${NGINX_VERSION}/
-  - patch -b auto/make ../patch/auto/make.patch
-  - cat auto/make
+  - patch -b ./auto/make ../patch/auto/make.patch
+  #- cat auto/make
   -  ./configure --with-stream --add-module=../ngxpp --add-module=../http/echo --add-module=../http/filter > build.log 2>&1 || (cat build.log && exit 1)
+  - cat ./objs/Makefile
   - make -j2 > build.log 2>&1 || (cat build.log && exit 1)
   - ./objs/nginx -V
   - export PATH=$PATH:`pwd`/objs
