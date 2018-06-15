@@ -9,6 +9,8 @@ compiler:
   - gcc
   - clang
 
+cache: ccache
+
 env:
   global:
     - LUAJIT_LIB=/usr/lib64/libluajit-5.1.so
