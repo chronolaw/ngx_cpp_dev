@@ -16,7 +16,7 @@
  
          ngx_src=`echo $ngx_src | sed -e "s/\//$ngx_regex_dirsep/g"`
  
-+        ext=${ngx_src#*.}
++        ext=${ngx_src##*.}
 +        ngx_cxx=$ngx_cc
 +        if [ $ext = "cpp" ]; then
 +                   ngx_cxx="$ngx_cc \$(CXXFLAGS)"
@@ -34,7 +34,7 @@
  END
          else
  
-+            ext=${ngx_source#*.}
++            ext=${ngx_source##*.}
 +            ngx_cxx=$ngx_cc
 +            if [ $ext = "cpp" ]; then
 +                       ngx_cxx="$ngx_cc \$(CXXFLAGS)"
