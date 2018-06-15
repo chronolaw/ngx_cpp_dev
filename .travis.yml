@@ -1,0 +1,35 @@
+sudo: required
+dist: trusty
+
+os: linux
+
+language: cpp
+
+compiler:
+  - gcc
+  - clang
+
+env:
+  global:
+    - LUAJIT_LIB=/usr/lib64/libluajit-5.1.so
+    - LUAJIT_INC=/usr/include/luajit-2.0
+  matrix:
+    - NGINX_VERSION=1.12.0
+    - NGINX_VERSION=1.15.0
+
+before_install:
+  - sudo apt-get install -qq -y cpanminus libluajit-5.1-dev libgd-dev
+  - sudo cpanm -v --notest Test::Nginx > build.log 2>&1 || (cat build.log && exit 1)
+
+install:
+  - wget http://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz && tar -xzf nginx-${NGINX_VERSION}.tar.gz
+
+script:
+  - cd nginx-${NGINX_VERSION}/
+  - patch -b auto/make ../patch/auto/make.patch
+  -  ./configure --with-stream --add-module=../http/echo --add-module=../http/filter > build.log 2>&1 || (cat build.log && exit 1)
+  - make -j2 > build.log 2>&1 || (cat build.log && exit 1)
+  - ./objs/nginx -V
+  - export PATH=$PATH:`pwd`/objs
+  - cd ..
+  - prove -r t
