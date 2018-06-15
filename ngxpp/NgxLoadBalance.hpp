@@ -35,7 +35,7 @@ public:
         NgxException::require(rc);
 
         r->upstream->peer.get  = get_peer;
-        r->upstream->peer.free = free_peer?free_peer:
+        r->upstream->peer.free = (free_peer != nullptr)?free_peer:
                                  r->upstream->peer.free;
 
         return peer_data;
