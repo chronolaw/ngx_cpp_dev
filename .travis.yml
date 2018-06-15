@@ -33,7 +33,7 @@ script:
   - cd ..
   - cd nginx-${NGINX_VERSION}/
   - patch -b ./auto/make ../patch/auto/make.patch
-  -  ./configure --with-stream --add-module=../ngxpp --add-module=../http/echo --add-module=../http/filter > build.log 2>&1 || (cat build.log && exit 1)
+  - ./configure --with-stream --add-module=../ngxpp --add-module=../http/echo --add-module=../http/filter --add-module=../http/test --add-module=../http/datahook --add-module=../http/upstream --add-module=../http/loadbalance > build.log 2>&1 || (cat build.log && exit 1)
   - make -j2 > build.log 2>&1 || (cat build.log && exit 1)
   - ./objs/nginx -V
   - export PATH=$PATH:`pwd`/objs
