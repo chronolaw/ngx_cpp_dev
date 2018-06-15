@@ -1,8 +1,7 @@
 #!/bin/sh
 
 ngx_path=$HOME/nginx
-src_path=.
-#src_path=$HOME/ngx_cpp_dev
+src_path=$HOME/github/ngx_cpp_dev
 
 build_date="${USER} build at `date '+%Y.%m.%d %H:%M'`"
 cc_opt="-g -O0"
