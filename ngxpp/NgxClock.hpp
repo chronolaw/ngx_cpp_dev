@@ -48,7 +48,7 @@ public:
 public:
     static void sleep(ngx_uint_t sec)
     {
-        ngx_sleep(sec);
+        ngx_msleep(sec * 1000);
     }
 
     static void msleep(ngx_uint_t msec)
