@@ -4,6 +4,8 @@ ngx_cpp_dev
 
 Nginx cpp development kit, with the power of C++11 and Boost Library.
 
+[![Build Status](https://travis-ci.org/chronolaw/ngx_cpp_dev.svg?branch=master)](https://travis-ci.org/chronolaw/ngx_cpp_dev)
+
 Table of Contents
 =================
 
