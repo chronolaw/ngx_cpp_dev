@@ -21,18 +21,18 @@ env:
 
 before_install:
   - sudo apt-get install -qq -y cpanminus libluajit-5.1-dev libgd-dev
-  #- sudo apt-get install libboost-all-dev
-  - sudo cpanm -v --notest Test::Nginx > build.log 2>&1 || (cat build.log && exit 1)
+  - sudo apt-get install libboost-all-dev
+  #- sudo cpanm -v --notest Test::Nginx > build.log 2>&1 || (cat build.log && exit 1)
 
 install:
   - wget http://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz && tar -xzf nginx-${NGINX_VERSION}.tar.gz
-  - wget -O boost_1_56_0.tar.gz http://sourceforge.net/projects/boost/files/boost/1.56.0/boost_1_56_0.tar.gz/download && tar -xzf boost_1_56_0.tar.gz
+  #- wget -O boost_1_56_0.tar.gz http://sourceforge.net/projects/boost/files/boost/1.56.0/boost_1_56_0.tar.gz/download && tar -xzf boost_1_56_0.tar.gz
 
 script:
-  - cd boost_1_56_0
-  - ./bootstrap.sh --without-libraries=filesystem,graph,iostreams,locale,python,regex,serialization,wave,test,mpi,program_options
-  - sudo ./b2 link=static -j2 install > build.log 2>&1 || (cat build.log && exit 1)
-  - cd ..
+  #- cd boost_1_56_0
+  #- ./bootstrap.sh --without-libraries=filesystem,graph,iostreams,locale,python,regex,serialization,wave,test,mpi,program_options
+  #- sudo ./b2 link=static -j2 install > build.log 2>&1 || (cat build.log && exit 1)
+  #- cd ..
   - cd nginx-${NGINX_VERSION}/
   - patch -b ./auto/make ../patch/auto/make.patch
   - ./configure --with-stream --add-module=../ngxpp --add-module=../http/echo --add-module=../http/filter --add-module=../http/test --add-module=../http/datahook --add-module=../http/upstream --add-module=../http/loadbalance --add-module=../http/subrequest --add-module=../http/shmem --add-module=../http/variables > build.log 2>&1 || (cat build.log && exit 1)
