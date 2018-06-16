@@ -13,7 +13,18 @@
 #include <deque>
 #include <exception>
 
+#include <boost/version.hpp>
+
+// ignore_unused since boost 1.56
+#if BOOST_VERSION < 105600
+namespace boost {
+template <typename... Ts>
+inline void ignore_unused(Ts const& ...){}
+}
+#else
 #include <boost/core/ignore_unused.hpp>
+#endif
+
 #include <boost/core/explicit_operator_bool.hpp>
 
 #include <boost/type_traits.hpp>
