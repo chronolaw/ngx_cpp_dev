@@ -22,7 +22,7 @@ env:
 before_install:
   - sudo apt-get install -qq -y cpanminus libluajit-5.1-dev libgd-dev
   - sudo apt-get install libboost-all-dev
-  #- sudo cpanm -v --notest Test::Nginx > build.log 2>&1 || (cat build.log && exit 1)
+  - sudo cpanm -v --notest Test::Nginx > build.log 2>&1 || (cat build.log && exit 1)
 
 install:
   - wget http://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz && tar -xzf nginx-${NGINX_VERSION}.tar.gz
