@@ -15,13 +15,18 @@
 
 #include <boost/version.hpp>
 
-// ignore_unused since boost 1.56
+// ignore_unused/explicit_bool since boost 1.56
 #if BOOST_VERSION < 105600
 namespace boost {
 template <typename... Ts>
 inline void ignore_unused(Ts const& ...){}
 }
-#include <boost/utility/explicit_operator_bool.hpp>
+
+#define BOOST_EXPLICIT_OPERATOR_BOOL()\
+    BOOST_FORCEINLINE explicit operator bool () const\
+    {\
+        return !this->operator! ();\
+    }
 #else
 #include <boost/core/ignore_unused.hpp>
 #include <boost/core/explicit_operator_bool.hpp>
