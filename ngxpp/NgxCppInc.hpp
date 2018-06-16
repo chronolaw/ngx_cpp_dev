@@ -21,11 +21,12 @@ namespace boost {
 template <typename... Ts>
 inline void ignore_unused(Ts const& ...){}
 }
+#include <boost/utility/explicit_operator_bool.hpp>
 #else
 #include <boost/core/ignore_unused.hpp>
+#include <boost/core/explicit_operator_bool.hpp>
 #endif
 
-#include <boost/core/explicit_operator_bool.hpp>
 
 #include <boost/type_traits.hpp>
 #include <boost/noncopyable.hpp>
