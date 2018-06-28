@@ -16,9 +16,6 @@ cache:
   cpan: true
   apt: true
   ccache: true
-  directories:
-    - $DOWNLOAD_CACHE
-    - $INSTALL_CACHE
 
 env:
   global:

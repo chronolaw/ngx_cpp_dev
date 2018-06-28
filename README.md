@@ -29,6 +29,7 @@ See Also
 ====
 * [annotated_nginx](https://github.com/chronolaw/annotated_nginx) - 注释nginx，学习研究源码
 * [openresty_dev](https://github.com/chronolaw/openresty_dev) - OpenResty/Lua Programming
+* [ngx_google_perftools_profiler](https://github.com/chronolaw/ngx_google_perftools_profiler_module) - A better tools for nginx with google_perftools
 
 Requirements
 ============
