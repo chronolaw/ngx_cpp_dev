@@ -56,7 +56,7 @@ public:
 
         auto p = ngx_rbtree_min(get()->root, get()->sentinel);
 
-        constexpr auto offset = (std::size_t)&(((T*)0)->*np);
+        const auto offset = (std::size_t)&(((T*)0)->*np);
 
         return *(T*)((u_char*)(p) - offset);
     }

@@ -119,7 +119,7 @@ public:
 public:
     bool empty() const
     {
-        return !get()->part->nelts;
+        return !get()->part.nelts;
     }
 
 public:
