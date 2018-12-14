@@ -23,7 +23,7 @@ Status
 ====
 Experimental but works well.
 
-Now support *Nginx 1.11.10 and later*.
+Now support *Nginx 1.13.10 and later*.
 
 See Also
 ====

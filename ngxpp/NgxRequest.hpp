@@ -203,6 +203,11 @@ public:
         return send(buf);
     }
 
+    ngx_int_t send(ngx_str_t& str) const
+    {
+        send(&str);
+    }
+
     ngx_int_t send(string_ref_type str) const
     {
         auto s = m_pool.dup(str);
