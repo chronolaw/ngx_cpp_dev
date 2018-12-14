@@ -14,7 +14,6 @@ extern "C" {
 
 #include <ngx_md5.h>
 #include <ngx_sha1.h>
-#include <ngx_murmurhash.h>
 }
 
 #define ngx_cpp_version 1001000

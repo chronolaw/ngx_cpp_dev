@@ -4,7 +4,7 @@
 #define _NGX_CPPINC_HPP
 
 #if __cplusplus < 201103L
-    #error "ngx_cpp_module need C++11 implementation!"
+    #error "ngx_cpp_module needs C++11 implementation!"
 #endif
 
 #include <cassert>
