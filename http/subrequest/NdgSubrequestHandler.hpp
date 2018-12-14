@@ -7,19 +7,23 @@
 //using namespace std;
 
 #include "NdgSubrequestConf.hpp"
-#include "../datahook/NdgDataHookConf.hpp"
+//#include "../datahook/NdgDataHookConf.hpp"
+
+#if nginx_version < 1013010
+    #error "need latest nginx!"
+#endif
 
 class NdgSubrequestCallback final
 {
 public:
     typedef NgxLogDebug log;
-    typedef NdgDataHookModule hook_module;
+    //typedef NdgDataHookModule hook_module;
 public:
     static ngx_int_t sub_post(ngx_http_request_t* r, void* data, ngx_int_t rc)
     {
         // r is subrequest
-        auto& pr_ctx_data = hook_module::data(r->parent);
-        pr_ctx_data.state(rc);
+        //auto& pr_ctx_data = hook_module::data(r->parent);
+        //pr_ctx_data.state(rc);
 
         return NGX_OK;
     }
@@ -27,20 +31,29 @@ public:
     static ngx_int_t parent_post(ngx_http_request_t* r)
     {
         // r is parent request
-        auto& ctx_data = hook_module::data(r);
+        //auto& ctx_data = hook_module::data(r);
 
-        if(ctx_data.status != NGX_HTTP_OK)
+        //if(ctx_data.status != NGX_HTTP_OK)
+        //{
+        //    return NGX_HTTP_INTERNAL_SERVER_ERROR;
+        //}
+
+        //NgxHeadersOut h(ctx_data.headers);
+        //NgxHeadersChecker()(h);
+
+        auto sr = r->postponed->request;
+        NgxHeadersOut h(sr);
+
+        if(h->status != NGX_HTTP_OK)
         {
             return NGX_HTTP_INTERNAL_SERVER_ERROR;
         }
 
-        NgxHeadersOut h(ctx_data.headers);
-        //NgxHeadersChecker()(h);
-
         ngx_str_t msg = ngx_string("subrequest");
 
-        NgxChain chain = ctx_data.body;
-        auto len = msg.len + chain.size();
+        //NgxChain chain = ctx_data.body;
+        NgxChainNode ch = sr->out;
+        auto len = msg.len + ch.data().size();
 
         NgxResponse resp(r);
 
@@ -52,20 +65,24 @@ public:
                 resp.headers().add(x);
             });
 
-        for(auto& ch : chain)
-        {
-            if(ch.data().special())
-            {
-                continue;
-            }
+        assert(ch.data().last());
+        ch.data().finish(false);
+        resp.send(ch);
+        //for(auto& ch : chain)
+        //{
+        //    if(ch.data().special())
+        //    {
+        //        continue;
+        //    }
 
-            if(ch.data().last())
-            {
-                ch.data().finish(false);
-            }
+        //    if(ch.data().last())
+        //    {
+        //        ch.data().finish(false);
+        //    }
 
-            resp.send(ch.data());
-        }
+        //    resp.send(ch.data());
+        //}
+
         resp.send(&msg);
         resp.eof();
 
@@ -76,12 +93,12 @@ public:
 class NdgSubrequestHandler final
 {
 public:
-    typedef NdgSubrequestHandler this_type;
-    typedef NdgSubrequestCallback callback_type;
-    typedef NdgDataHookModule hook_module;
+    typedef NdgSubrequestHandler    this_type;
+    typedef NdgSubrequestCallback   callback_type;
+    //typedef NdgDataHookModule   hook_module;
 
-    typedef NdgSubrequestModule this_module;
-    typedef NgxSubRequest<callback_type> this_subrequest;
+    typedef NdgSubrequestModule             this_module;
+    typedef NgxSubRequest<callback_type>    this_subrequest;
 public:
     static ngx_int_t handler(ngx_http_request_t *r)
     try
@@ -97,7 +114,7 @@ public:
 
         this_subrequest(r).create(cf.loc, cf.args);
 
-        hook_module::data(r).hooking();
+        //hook_module::data(r).hooking();
 
         return NGX_DONE;
     }

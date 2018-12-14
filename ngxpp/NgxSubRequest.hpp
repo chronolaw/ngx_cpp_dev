@@ -5,6 +5,10 @@
 
 #include "NgxPool.hpp"
 
+#if nginx_version < 1013010
+    #error "need latest nginx!"
+#endif
+
 template<typename T, ngx_http_phases ph>
 class NgxSubRequestHandler final
 {
@@ -68,14 +72,14 @@ public:
     ngx_http_request_t* create(ngx_str_t& uri,
                                ngx_str_t& args,
                                void* psr_data = nullptr,
-                               ngx_uint_t flags = 0) const
+                               ngx_uint_t flags = NGX_HTTP_SUBREQUEST_IN_MEMORY) const
     {
         return create(&uri, &args, psr_data, flags);
     }
 
     ngx_http_request_t* create(ngx_str_t& uri,
                                void* psr_data = nullptr,
-                               ngx_uint_t flags = 0) const
+                               ngx_uint_t flags = NGX_HTTP_SUBREQUEST_IN_MEMORY) const
     {
         return create(&uri, nullptr, psr_data, flags);
     }
