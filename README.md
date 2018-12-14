@@ -37,7 +37,7 @@ Requirements
 * Linux or other UNIX like
 * C++11(gcc 4.6 or later)
 * Boost(1.57 or later)
-* Nginx 1.11.x or later
+* Nginx 1.13.10 or later
 
 Please see directiory "setup".
 
