@@ -22,8 +22,8 @@ env:
     - LUAJIT_LIB=/usr/lib64/libluajit-5.1.so
     - LUAJIT_INC=/usr/include/luajit-2.0
   matrix:
-    - NGINX_VERSION=1.12.0
-    - NGINX_VERSION=1.15.1
+    - NGINX_VERSION=1.14.0
+    - NGINX_VERSION=1.15.7
 
 before_install:
   - sudo apt-get install -qq -y cpanminus libluajit-5.1-dev libgd-dev
