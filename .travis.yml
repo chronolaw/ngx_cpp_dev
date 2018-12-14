@@ -41,7 +41,21 @@ script:
   #- cd ..
   - cd nginx-${NGINX_VERSION}/
   - patch -b ./auto/make ../patch/auto/make.patch
-  - ./configure --with-stream --add-module=../ngxpp --add-module=../http/echo --add-module=../http/filter --add-module=../http/test --add-module=../http/datahook --add-module=../http/upstream --add-module=../http/loadbalance --add-module=../http/subrequest --add-module=../http/shmem --add-module=../http/variables --add-module=../stream/discard --add-module=../stream/time > build.log 2>&1 || (cat build.log && exit 1)
+  - ./configure
+   --with-stream
+   --add-module=../ngxpp
+   --add-module=../http/echo
+   --add-module=../http/filter
+   --add-module=../http/test
+   --add-module=../http/datahook
+   --add-module=../http/upstream
+   --add-module=../http/loadbalance
+   --add-module=../http/subrequest
+   --add-module=../http/shmem
+   --add-module=../http/variables
+   --add-module=../stream/discard
+   --add-module=../stream/time
+   > build.log 2>&1 || (cat build.log && exit 1)
   - make -j2 > build.log 2>&1 || (cat build.log && exit 1)
   - ./objs/nginx -V
   - export PATH=$PATH:`pwd`/objs
