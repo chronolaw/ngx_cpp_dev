@@ -1,11 +1,9 @@
-// Copyright (c) 2015-2017
+// Copyright (c) 2015-2018
 // Author: Chrono Law
 #ifndef _NDG_ECHO_CONF_HPP
 #define _NDG_ECHO_CONF_HPP
 
 #include "NgxAll.hpp"
-
-#define ENABLE_SCRIPT
 
 class NdgEchoConf final
 {
@@ -16,9 +14,6 @@ public:
     ~NdgEchoConf() = default;
 public:
     ngx_str_t msg;
-#ifdef ENABLE_SCRIPT
-    NgxComplexValue var;
-#endif
 public:
     static void* create(ngx_conf_t* cf)
     {
@@ -31,6 +26,6 @@ public:
     }
 };
 
-NGX_MOD_INSTANCE(NdgEchoModule, ndg_echo_module, NdgEchoConf)
+NGX_MOD_INSTANCE(NdgEchoModule, ngx_http_ndg_echo_module, NdgEchoConf)
 
 #endif  //_NDG_ECHO_CONF_HPP

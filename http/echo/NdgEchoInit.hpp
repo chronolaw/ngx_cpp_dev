@@ -9,9 +9,9 @@
 class NdgEchoInit final
 {
 public:
-    typedef NdgEchoConf conf_type;
-    typedef NdgEchoHandler handler_type;
-    typedef NdgEchoInit this_type;
+    typedef NdgEchoConf         conf_type;
+    typedef NdgEchoHandler      handler_type;
+    typedef NdgEchoInit         this_type;
 public:
     static ngx_command_t* cmds()
     {
@@ -19,7 +19,7 @@ public:
         {
             {
                 ngx_string("ndg_echo"),
-                NgxTake(NGX_HTTP_LOC_CONF, 1),
+                NGX_HTTP_LOC_CONF|NGX_CONF_TAKE1,
                 &this_type::set_echo,
                 NGX_HTTP_LOC_CONF_OFFSET,
                 offsetof(conf_type, msg),
@@ -63,19 +63,12 @@ public:
 private:
     static char* set_echo(ngx_conf_t* cf, ngx_command_t* cmd, void* conf)
     {
-#ifdef ENABLE_SCRIPT
-        NgxStrArray args(cf->args);
-        auto& lcf = conf_type::cast(conf);
-
-        lcf.var.init(cf, args[1]);
-#else
         auto rc = ngx_conf_set_str_slot(cf, cmd, conf);
 
         if(rc != NGX_CONF_OK)
         {
             return rc;
         }
-#endif
 
         NgxHttpCoreModule::handler(
                         cf, &handler_type::handler);

@@ -3,5 +3,5 @@
 
 #include "NdgEchoInit.hpp"
 
-auto ndg_echo_module = NdgEchoInit::module();
+auto ngx_http_ndg_echo_module = NdgEchoInit::module();
 
