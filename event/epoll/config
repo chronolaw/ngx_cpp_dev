@@ -1,6 +1,0 @@
-#./configure --add-module=$HOME/path/modules/xxx
-
-ngx_addon_name=cpp_epoll_module
-
-EVENT_MODULES="$EVENT_MODULES cpp_epoll_module"
-NGX_ADDON_SRCS="$NGX_ADDON_SRCS $ngx_addon_dir/ModCppEpoll.cpp"
