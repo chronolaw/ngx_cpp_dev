@@ -10,10 +10,10 @@ prefix="--prefix=/opt/nginx_cpp"
 
 ngxpp_module="--add-module=${src_path}/ngxpp"
 
-modules="test echo datahook filter \
+modules="test echo filter \
          upstream loadbalance \
          subrequest \
-         shmem variables \
+         variables \
          "
 
 http_modules=""
