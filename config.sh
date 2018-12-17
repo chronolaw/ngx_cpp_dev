@@ -5,6 +5,8 @@ src_path=$HOME/github/ngx_cpp_dev
 
 build_date="${USER} build at `date '+%Y.%m.%d %H:%M'`"
 cc_opt="-g -O0"
+common_opts="--with-threads --with-pcre-jit"
+prefix="--prefix=/opt/nginx_cpp"
 
 ngxpp_module="--add-module=${src_path}/ngxpp"
 
@@ -30,8 +32,10 @@ do
     event_modules="${event_modules} --add-module=${src_path}/event/${m} "
 done
 
-opts="${ngxpp_module}     \
-      ${http_modules}     \
+opts="${prefix}
+      ${common_opts}
+      ${ngxpp_module}
+      ${http_modules}
       ${event_modules}
       "
 cd $ngx_path

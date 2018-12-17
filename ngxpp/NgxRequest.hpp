@@ -205,7 +205,7 @@ public:
 
     ngx_int_t send(ngx_str_t& str) const
     {
-        send(&str);
+        return send(&str);
     }
 
     ngx_int_t send(string_ref_type str) const
