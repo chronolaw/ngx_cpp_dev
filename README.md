@@ -100,8 +100,8 @@ Class Name      | Description
 NgxArray        | wrapper for nginx `ngx_array_t`.
 NgxList         | wrapper for nginx `ngx_list_t.`
 NgxQueue        | wrapper for nginx `ngx_queue_t`.
-NgxBuf          | wrapper for nginx `ngx_buf_t`.
-NgxChain        | wrapper for nginx `ngx_chain_t`.
+NgxBuf          | deprecated, wrapper for nginx `ngx_buf_t`.
+NgxChain        | deprecated, wrapper for nginx `ngx_chain_t`.
 NgxRbtree       | wrapper for nginx `ngx_rbtree_t`.
 
 modules
@@ -111,8 +111,8 @@ Class Name      | Description
 ----------------|------------------------
 NgxModuleConfig | easy to access nginx module confing info.
 NgxModule       | get module's config and ctx data.
-NgxCommand      | abandoned, DO NOT USE IT.
-NgxTake         |
+NgxCommand      | deprecated, DO NOT USE IT.
+NgxTake         | deprecated
 NgxModuleCtx    | easy to access nginx module's ctx data.
 NgxHttpCoreModule|wrapper for ngx_http_core_module
 NgxFilter       | wrapper for nginx filter mechanism.
