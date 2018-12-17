@@ -10,10 +10,8 @@ prefix="--prefix=/opt/nginx_cpp"
 
 ngxpp_module="--add-module=${src_path}/ngxpp"
 
-modules="test echo filter \
-         upstream loadbalance \
-         subrequest \
-         variables \
+modules="test echo filter
+         variables
          "
 
 http_modules=""
@@ -23,7 +21,7 @@ do
     http_modules="${http_modules} --add-module=${src_path}/http/${m} "
 done
 
-modules="epoll"
+modules=""
 
 event_modules=""
 
