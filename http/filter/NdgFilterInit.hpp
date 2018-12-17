@@ -1,17 +1,17 @@
-// Copyright (c) 2015-2017
+// Copyright (c) 2015-2018
 // Author: Chrono Law
-#ifndef _NDG_FOOTER_INIT_HPP
-#define _NDG_FOOTER_INIT_HPP
+#ifndef _NDG_FILTER_INIT_HPP
+#define _NDG_FILTER_INIT_HPP
 
-#include "NdgFooterConf.hpp"
-#include "NdgFooterHandler.hpp"
+#include "NdgFilterConf.hpp"
+#include "NdgFilterHandler.hpp"
 
-class NdgFooterInit final
+class NdgFilterInit final
 {
 public:
-    typedef NdgFooterConf conf_type;
-    typedef NdgFooterHandler handler_type;
-    typedef NdgFooterInit this_type;
+    typedef NdgFilterConf       conf_type;
+    typedef NdgFilterHandler    handler_type;
+    typedef NdgFilterInit       this_type;
 public:
     static ngx_command_t* cmds()
     {
@@ -19,7 +19,7 @@ public:
         {
             {
                 ngx_string("ndg_header"),
-                NgxTake(NGX_HTTP_LOC_CONF, 2),
+                NGX_HTTP_LOC_CONF|NGX_CONF_TAKE2,
                 ngx_conf_set_keyval_slot,
                 NGX_HTTP_LOC_CONF_OFFSET,
                 offsetof(conf_type, headers),
@@ -28,7 +28,7 @@ public:
 
             {
                 ngx_string("ndg_footer"),
-                NgxTake(NGX_HTTP_LOC_CONF, 1),
+                NGX_HTTP_LOC_CONF|NGX_CONF_TAKE1,
                 ngx_conf_set_str_slot,
                 NGX_HTTP_LOC_CONF_OFFSET,
                 offsetof(conf_type, footer),
@@ -73,4 +73,4 @@ public:
     }
 };
 
-#endif  //_NDG_FOOTER_INIT_HPP
+#endif  //_NDG_FILTER_INIT_HPP

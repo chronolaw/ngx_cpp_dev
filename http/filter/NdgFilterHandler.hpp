@@ -1,16 +1,16 @@
-// Copyright (c) 2015-2017
+// Copyright (c) 2015-2018
 // Author: Chrono Law
-#ifndef _NDG_FOOTER_HANDLER_HPP
-#define _NDG_FOOTER_HANDLER_HPP
+#ifndef _NDG_FILTER_HANDLER_HPP
+#define _NDG_FILTER_HANDLER_HPP
 
-#include "NdgFooterConf.hpp"
+#include "NdgFilterConf.hpp"
 
-class NdgFooterHandler final
+class NdgFilterHandler final
 {
 public:
-    typedef NdgFooterHandler this_type;
-    typedef NdgFooterModule this_module;
-    typedef NgxFilter<this_type> this_filter;
+    typedef NdgFilterHandler        this_type;
+    typedef NdgFilterModule         this_module;
+    typedef NgxFilter<this_type>    this_filter;
 public:
     static ngx_int_t init(ngx_conf_t* cf)
     {
@@ -64,7 +64,7 @@ public:
             return;
         }
 
-        auto len = resp.headers()->content_length_n;
+        auto len = resp->headers_out.content_length_n;
         if(len > 0)
         {
             resp.length(len + footer.size());
@@ -99,18 +99,15 @@ public:
             return;
         }
 
-        NgxChain ch = in;
-        auto p = ch.begin();
-        for(; p != ch.end();++p)
-        {
-            if(p->data().last())
-            {
+        auto p = in;
+        for (; p; p = p->next) {
+            if (p->buf->last_buf) {
                 break;
             }
         }
 
-        if(p == ch.end())
-        {
+        // eof not find
+        if (p == NULL) {
             return;
         }
 
@@ -118,23 +115,32 @@ public:
 
         NgxPool pool(r);
 
-        NgxBuf buf = pool.buffer();
-        buf.range(footer);
-        buf.finish();
+        auto b = pool.buffer();
 
-        if(!p->data().size())
-        {
-            p->set(buf);
+        b->pos = cf.footer.data;
+        b->last = cf.footer.data + cf.footer.len;
+        b->memory = 1;
+        b->last_buf = 1;
+        b->last_in_chain = 1;
+
+        // set to the last node
+        if (ngx_buf_size(p->buf) == 0) {
+            p->buf = b;
             return;
         }
 
-        NgxChainNode n = pool.chain();
-        n.set(buf);
-        n.finish();
+        // add a new last node
+        auto out = pool.chain();
+        out->buf = b;
+        out->next = NULL;
 
-        p->link(n);
-        p->data().finish(false);
+        // link to the new node
+        p->next = out;
+        p->buf->last_buf = 0;
+        p->buf->last_in_chain = 0;
+
+        return; //to next filter
     }
 };
 
-#endif  //_NDG_FOOTER_HANDLER_HPP
+#endif  //_NDG_FILTER_HANDLER_HPP
