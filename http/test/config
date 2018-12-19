@@ -5,12 +5,12 @@ ngx_addon_name=ndg_test_module
 if test -n "$ngx_module_link"; then
     ngx_module_type=HTTP
     ngx_module_name=ndg_test_module
-    ngx_module_srcs="$ngx_addon_dir/ModNdgTest.cpp"
+    ngx_module_srcs="$ngx_addon_dir/NdgTestModule.cpp"
 
     . auto/module
 else
     HTTP_MODULES="$HTTP_MODULES ndg_test_module"
-    NGX_ADDON_SRCS="$NGX_ADDON_SRCS $ngx_addon_dir/ModNdgTest.cpp"
+    NGX_ADDON_SRCS="$NGX_ADDON_SRCS $ngx_addon_dir/NdgTestModule.cpp"
 fi
 
 #HTTP_MODULES="$HTTP_MODULES ndg_test_module"
@@ -21,9 +21,9 @@ fi
 
 #############
 
-ndg_addon_mod=ndg_test_module
-ndg_addon_src=ModNdgTest.cpp
-ndg_addon_incs="$ngx_addon_dir/../../ngxpp"
+#ndg_addon_mod=ndg_test_module
+#ndg_addon_src=ModNdgTest.cpp
+#ndg_addon_incs="$ngx_addon_dir/../../ngxpp"
 
 #HTTP_MODULES="$HTTP_MODULES $ndg_addon_mod"
 #HTTP_AUX_FILTER_MODULES="$HTTP_AUX_FILTER_MODULES $ndg_addon_name"
